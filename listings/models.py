@@ -7,22 +7,36 @@ class TNZTag(models.Model):
     """
     Raw dictionary data of Tag
     """
-    name_key = models.CharField(max_length=50)
-    o_id = models.IntegerField()
     unique_id = models.IntegerField()
-    market = models.CharField(max_length=5)
+    o_id = models.IntegerField()
     label = models.CharField(max_length=200)
     listing_count = models.IntegerField()
+    name_key = models.CharField(max_length=200)
+    market = models.CharField(max_length=5)
 
     def __str__(self):
         return self.name_key
+
+
+class TNZRegion(models.Model):
+    unique_id = models.IntegerField()
+    o_id = models.IntegerField()
+    label = models.CharField(max_length=200)
+    name_key = models.CharField(max_length=50)
+    market = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.label
 
 
 class TNZRawListing(models.Model):
     """
     Raw dictionary data for Listing
     """
-    data = models.TextField()
     unique_id = models.IntegerField()
     name = models.CharField(max_length=200)
     market = models.CharField(max_length=5)
+    data = models.TextField()
+
+    def __str__(self):
+        return self.name

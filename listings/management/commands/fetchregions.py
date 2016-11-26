@@ -1,15 +1,15 @@
 import os
 import requests
 from django.core.management.base import BaseCommand, CommandError
-from ...models import TNZTag
+from ...models import TNZRegion
 
 
 class Command(BaseCommand):
-    help = 'Fetch tags'
+    help = 'Fetch regions'
 
     can_import_settings = True
     api_key = os.environ.get('API_KEY')
-    base_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount'
+    base_url = 'http://www.newzealand.com/api/rest/v1/deliver/regions?level=simple'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
     def fetch(self, url: str = base_url, debug: bool = False) -> None:
         """
-        Recursively fetch all tags
+        Recursively fetch all regions
         :param url:
         :param debug:
         :return:
@@ -60,20 +60,20 @@ class Command(BaseCommand):
 
         data = res.json()
 
-        for tag in data['items']:
-            existings = TNZTag.objects.filter(name_key=tag['name_key'])
+        for region in data['items']:
+            existings = TNZRegion.objects.filter(name_key=region['name_key'])
             if not existings.exists():
-                TNZTag.objects.create(**tag)
+                TNZRegion.objects.create(**region)
                 imported += 1
                 if debug:
-                    self.stdout.write('{0} written'.format(tag['name_key']))
+                    self.stdout.write('{0} written'.format(region['name_key']))
             else:
-                existings.update(**tag)
+                existings.update(**region)
                 updated += 1
                 if debug:
-                    self.stdout.write('{0} exists, updated'.format(tag['name_key']))
+                    self.stdout.write('{0} exists, updated'.format(region['name_key']))
         else:
-            self.stdout.write('Successfully imported {imported} tag(s), updated {updated} tag(s).'
+            self.stdout.write('Successfully imported {imported} region(s), updated {updated} region(s).'
                               .format(imported=imported, updated=updated))
             if data['link']['next'] != '':
                 self.fetch(data['link']['next'])
