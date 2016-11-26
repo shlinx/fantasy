@@ -13,7 +13,13 @@ class Command(BaseCommand):
     default_tag_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount'
 
     def add_arguments(self, parser):
-        parser.add_argument('debug', type=bool, nargs='?')
+        parser.add_argument(
+            '--debug',
+            action='store_true',
+            dest='debug',
+            default=False,
+            help='Show debug output information',
+        )
 
     def handle(self, *args, **options):
         self.fetch(debug=options['debug'])
