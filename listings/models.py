@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class RawTag(models.Model):
+class TNZTag(models.Model):
     """
     Raw dictionary data of Tag
     """
@@ -18,7 +18,7 @@ class RawTag(models.Model):
         return self.name_key
 
 
-class RawListing(models.Model):
+class TNZRawListing(models.Model):
     """
     Raw dictionary data for Listing
     """

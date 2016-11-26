@@ -1,7 +1,7 @@
 import os
 import requests
 from django.core.management.base import BaseCommand, CommandError
-from ...models import RawListing
+from ...models import TNZRawListing, TNZTag
 
 
 class Command(BaseCommand):
@@ -12,7 +12,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'tag',
+            '--tag',
+            dest='tag',
+            nargs='+',
             help='Specify a tag name'
         )
         parser.add_argument(
@@ -24,8 +26,14 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        url = self.base_url + '&tag=' + options['tag']
-        self.fetch(url=url, debug=options['debug'])
+        if 'all' in options['tag']:
+            tags = TNZTag.objects.order_by('-listing_count').values_list('name_key', flat=True)
+        else:
+            tags = options['tag']
+
+        for tag in tags:
+            url = self.base_url + '&tag=' + tag
+            self.fetch(url=url, debug=options['debug'])
 
     def fetch(self, url: str, debug: bool = False):
 
@@ -41,13 +49,13 @@ class Command(BaseCommand):
         data = res.json()
 
         for listing in data['items']:
-            if not RawListing.objects.filter(unique_id=listing['unique_id']).exists():
+            if not TNZRawListing.objects.filter(unique_id=listing['unique_id']).exists():
                 listing_data = {
                     'name': listing['nameoflisting'],
                     'unique_id': listing['unique_id'],
                     'data': str(listing)
                 }
-                RawListing.objects.create(**listing_data)
+                TNZRawListing.objects.create(**listing_data)
                 imported += 1
                 if debug:
                     self.stdout.write('Imported {name}'.format(name=listing['nameoflisting']))
