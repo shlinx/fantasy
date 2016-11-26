@@ -7,9 +7,12 @@ class RawTag(models.Model):
     """
     Raw dictionary data of Tag
     """
-    data = models.TextField()
     name_key = models.CharField(max_length=50)
+    o_id = models.IntegerField()
+    unique_id = models.IntegerField()
+    market = models.CharField(max_length=5)
     label = models.CharField(max_length=50)
+    listing_count = models.IntegerField()
 
     def __str__(self):
         return self.name_key

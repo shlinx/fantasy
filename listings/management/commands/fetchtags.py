@@ -51,16 +51,12 @@ class Command(BaseCommand):
 
         for tag in data['items']:
             if not RawTag.objects.filter(name_key=tag['name_key']).exists():
-                tag_data = {
-                    'name_key': tag['name_key'],
-                    'label': tag['label'],
-                    'data': str(tag)
-                }
-                RawTag.objects.create(**tag_data)
+                RawTag.objects.create(**tag)
                 imported += 1
                 if debug:
                     self.stdout.write('{0} written'.format(tag['name_key']))
             else:
+                RawTag.objects.filter(name_key=tag['name_key']).update(**tag)
                 skipped += 1
                 if debug:
                     self.stdout.write('{0} exists, skipped'.format(tag['name_key']))
