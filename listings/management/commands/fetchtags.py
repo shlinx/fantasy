@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     can_import_settings = True
     api_key = os.environ.get('API_KEY')
-    default_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount'
+    default_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount?display_market=cn'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         self.stdout.write('Fetching from {0}'.format(url))
 
         imported = 0
-        skipped = 0
+        updated = 0
         res = requests.get(url, headers={'Authorization': 'Bearer ' + self.api_key})
         if res.status_code != 200:
             raise requests.HTTPError('Fetching data fail', res.status_code)
@@ -50,18 +50,19 @@ class Command(BaseCommand):
         data = res.json()
 
         for tag in data['items']:
-            if not TNZTag.objects.filter(name_key=tag['name_key']).exists():
+            existings = TNZTag.objects.filter(name_key=tag['name_key'])
+            if not existings.exists():
                 TNZTag.objects.create(**tag)
                 imported += 1
                 if debug:
                     self.stdout.write('{0} written'.format(tag['name_key']))
             else:
-                TNZTag.objects.filter(name_key=tag['name_key']).update(**tag)
-                skipped += 1
+                existings.update(**tag)
+                updated += 1
                 if debug:
-                    self.stdout.write('{0} exists, skipped'.format(tag['name_key']))
+                    self.stdout.write('{0} exists, updated'.format(tag['name_key']))
         else:
-            self.stdout.write('Successfully imported {imported} tag(s), skipped {skipped} tag(s).'
-                              .format(imported=imported, skipped=skipped))
+            self.stdout.write('Successfully imported {imported} tag(s), updated {updated} tag(s).'
+                              .format(imported=imported, updated=updated))
             if data['link']['next'] != '':
                 self.fetch(data['link']['next'])

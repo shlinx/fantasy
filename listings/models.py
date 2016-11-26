@@ -11,7 +11,7 @@ class TNZTag(models.Model):
     o_id = models.IntegerField()
     unique_id = models.IntegerField()
     market = models.CharField(max_length=5)
-    label = models.CharField(max_length=50)
+    label = models.CharField(max_length=200)
     listing_count = models.IntegerField()
 
     def __str__(self):
@@ -25,3 +25,4 @@ class TNZRawListing(models.Model):
     data = models.TextField()
     unique_id = models.IntegerField()
     name = models.CharField(max_length=200)
+    market = models.CharField(max_length=5)
