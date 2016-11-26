@@ -14,3 +14,11 @@ class RawTag(models.Model):
     def __str__(self):
         return self.name_key
 
+
+class RawListing(models.Model):
+    """
+    Raw dictionary data for Listing
+    """
+    data = models.TextField()
+    unique_id = models.IntegerField()
+    name = models.CharField(max_length=200)

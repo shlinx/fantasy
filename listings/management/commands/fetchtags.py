@@ -5,12 +5,11 @@ from ...models import RawTag
 
 
 class Command(BaseCommand):
+    help = 'Fetch tags'
 
     can_import_settings = True
-
-    help = 'Fetch tags'
     api_key = os.environ.get('API_KEY')
-    default_tag_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount'
+    default_url = 'http://www.newzealand.com/api/rest/v1/deliver/tags/listingcount'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -22,9 +21,18 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        self.fetch(debug=options['debug'])
+        """
+        Implement the handle method
+        :param args:
+        :param options:
+        :return:
+        """
+        try:
+            self.fetch(debug=options['debug'])
+        except CommandError:
+            raise
 
-    def fetch(self, url: str = default_tag_url, debug: bool = False) -> None:
+    def fetch(self, url: str = default_url, debug: bool = False) -> None:
         """
         Recursively fetch all tags
         :param url:
@@ -57,6 +65,7 @@ class Command(BaseCommand):
                 if debug:
                     self.stdout.write('{0} exists, skipped'.format(tag['name_key']))
         else:
-            self.stdout.write('Successfully imported {0} tags, skipped {1} tags.'.format(imported, skipped))
+            self.stdout.write('Successfully imported {imported} tag(s), skipped {skipped} tag(s).'
+                              .format(imported=imported, skipped=skipped))
             if data['link']['next'] != '':
                 self.fetch(data['link']['next'])
