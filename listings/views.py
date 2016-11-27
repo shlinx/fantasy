@@ -9,3 +9,8 @@ from .models import TNZRegion
 class Index(generic.ListView):
     template_name = 'listings/index.html'
     model = TNZRegion
+
+
+class Region(generic.DetailView):
+    template_name = 'listings/region.html'
+    model = TNZRegion

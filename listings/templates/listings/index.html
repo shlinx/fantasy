@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Listing Index</title>
-</head>
-<body>
-{% if tnzregion_list %}
-    <ul><h3>Listing Index Page</h3>
-        {% for region in tnzregion_list %}
-            <li><a href="">{{ region.label }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No region currently available</p>
-{% endif %}
-</body>
-</html>
+{% extends 'listings/layout.html' %}
+{% block content %}
+    {% if tnzregion_list %}
+        <ul><h3>Listing Index Page</h3>
+            {% for region in tnzregion_list %}
+                <li><a href="{% url 'listings:region' pk=region.id %}">{{ region.label }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No region currently available</p>
+    {% endif %}
+{% endblock content %}

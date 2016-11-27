@@ -1,0 +1,6 @@
+{% extends 'listings/layout.html' %}
+{% block content %}
+    {% with tnzregion as region %}
+        <h3>{{ region.label }}</h3>
+    {% endwith %}
+{% endblock content %}
