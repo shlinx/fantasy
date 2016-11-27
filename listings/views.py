@@ -14,3 +14,4 @@ class Index(generic.ListView):
 class Region(generic.DetailView):
     template_name = 'listings/region.html'
     model = TNZRegion
+

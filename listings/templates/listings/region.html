@@ -2,5 +2,14 @@
 {% block content %}
     {% with tnzregion as region %}
         <h3>{{ region.label }}</h3>
+        {% if region.listings %}
+            <ul>
+                {% for listing in region.listings %}
+                    <li>{{ listing.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No listings found.</p>
+        {% endif %}
     {% endwith %}
 {% endblock content %}
