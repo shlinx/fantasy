@@ -113,3 +113,12 @@ class Command(BaseCommand):
                               .format(imported=imported, updated=updated))
             if data['link']['next']:
                 self.fetch(data['link']['next'], debug)
+
+    def extract_image(self, original_data):
+        image_data = {
+            'o_id': original_data['o_id'],
+            'description': original_data['description'],
+
+        }
+
+        return image_data

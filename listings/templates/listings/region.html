@@ -5,7 +5,13 @@
         {% if region.listings %}
             <ul>
                 {% for listing in region.listings %}
-                    <li>{{ listing.name }}</li>
+                    <li>
+                        <div>
+                            <h3>{{ listing.name }}</h3>
+                            <p>{{ listing.listing_summary }}</p>
+                            <div style="background: #0000ff url('{{ listing.get_main_image.url }}') no-repeat center/cover; width: 500px; height: 309px"></div>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

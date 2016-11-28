@@ -35,7 +35,7 @@ class TNZRegion(models.Model):
 
     def listings(self):
         all_listings = TNZListing.objects.filter(market='cn')
-        return [listing for listing in all_listings if listing.regionname() == self.label]
+        return [listing for listing in all_listings if listing.regionname == self.label]
 
 
 class TNZListing(models.Model):
@@ -78,6 +78,19 @@ class TNZListing(models.Model):
     booking_email = models.CharField(max_length=50)
     cancellation_policy = models.TextField()
     parking = models.TextField()
+
+    def get_main_image(self):
+        try:
+            image_instances = next(iter(self.main_image.values()))['instances']
+        except IndexError:
+            return ''
+        else:
+            try:
+                original_image = [instance for instance in image_instances if instance['format'] == 'original'][0]
+            except IndexError:
+                return ''
+            else:
+                return original_image
 
     def __str__(self):
         return self.name

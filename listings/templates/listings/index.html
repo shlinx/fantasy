@@ -3,7 +3,7 @@
     {% if tnzregion_list %}
         <ul><h3>Listing Index Page</h3>
             {% for region in tnzregion_list %}
-                <li><a href="{% url 'listings:region' region.id %}">{{ region.label }}({{ region.listings.count }})</a></li>
+                <li><a href="{% url 'listings:region' region.id %}">{{ region.label }}({{ region.listings|length }})</a></li>
             {% endfor %}
         </ul>
     {% else %}
