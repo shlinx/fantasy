@@ -1,7 +1,11 @@
 {% extends 'listings/layout.html' %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
 {% block content %}
+    <div class="banner" style="background-image: url('{% static 'images/coronet-peak.jpg' %}')"></div>
     {% if tnzlisting_list %}
-        <ul><h3>Listings</h3>
+        <ul>
             {% for listing in tnzlisting_list|slice:":12" %}
                 <li>
                 {% include 'listings/includes/listing.html' %}
@@ -9,6 +13,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>No region currently available</p>
+        <p>No listing currently available</p>
     {% endif %}
+    {% render_bundle 'index' %}
 {% endblock content %}
