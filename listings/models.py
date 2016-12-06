@@ -84,13 +84,13 @@ class TNZListing(models.Model):
             image_instances = next(iter(self.main_image.values()))['instances']
         except (IndexError, AttributeError):
             return {'url': ''}
-        else:
-            try:
-                original_image = [instance for instance in image_instances if instance['format'] == 'original'][0]
-            except IndexError:
-                return {'url': ''}
-            else:
-                return original_image
+
+        try:
+            original_image = [instance for instance in image_instances if instance['format'] == 'original'][0]
+        except IndexError:
+            return {'url': ''}
+
+        return original_image
 
     def __str__(self):
         return self.name

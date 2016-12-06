@@ -1,9 +1,11 @@
 {% extends 'listings/layout.html' %}
 {% block content %}
-    {% if tnzregion_list %}
-        <ul><h3>Listing Index Page</h3>
-            {% for region in tnzregion_list %}
-                <li><a href="{% url 'listings:region' region.id %}">{{ region.label }}({{ region.listings|length }})</a></li>
+    {% if tnzlisting_list %}
+        <ul><h3>Listings</h3>
+            {% for listing in tnzlisting_list|slice:":12" %}
+                <li>
+                {% include 'listings/includes/listing.html' %}
+                </li>
             {% endfor %}
         </ul>
     {% else %}
