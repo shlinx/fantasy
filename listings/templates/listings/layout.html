@@ -1,9 +1,11 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Fantasy</title>
+    {% render_bundle 'index' 'css' %}
 </head>
 <body>
 
