@@ -3,7 +3,7 @@
 {% load render_bundle from webpack_loader %}
 
 {% block content %}
-    <div class="banner" style="background-image: url('{% static '../../../assets/images/coronet-peak.jpg' %}')"></div>
+    <div class="banner"></div>
     {% if tnzlisting_list %}
         <ul>
             {% for listing in tnzlisting_list|slice:":12" %}

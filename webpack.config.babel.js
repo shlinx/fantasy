@@ -32,7 +32,19 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass'])
+                loader: ExtractTextPlugin.extract('style', 'css!sass')
+            },
+            {
+                test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?limit=10000&minetype=application/font-woff&name=./fonts/[hash].[ext]"
+            },
+            {
+                test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?name=./fonts/[hash].[ext]"
+            },
+            {
+                test: /\.(png|jpg|jpeg|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?name=./images/[hash].[ext]"
             }
         ]
     },
