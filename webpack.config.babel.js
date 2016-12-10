@@ -51,11 +51,11 @@ const config = {
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}),
         new ExtractTextPlugin('css/[name].[contenthash].css'),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        }),
+        // new webpack.ProvidePlugin({
+        //     $: 'jquery',
+        //     jQuery: 'jquery',
+        //     'window.jQuery': 'jquery'
+        // }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

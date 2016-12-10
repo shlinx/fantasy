@@ -3,3 +3,9 @@
  */
 import '../scss/main.scss';
 console.log($);
+$('#search-tab').easyResponsiveTabs({
+    type: 'default',
+    width: 'auto',
+    fit: true,
+    closed: true
+});

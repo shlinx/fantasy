@@ -3,7 +3,39 @@
 {% load render_bundle from webpack_loader %}
 
 {% block content %}
-    <div class="banner"></div>
+    <header>
+        <div id="search-container" class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+            <div id="search-tab">
+                <ul class="resp-tabs-list">
+                    <li class="col-sm-4">我想去哪</li>
+                    <li class="col-sm-4">感兴趣</li>
+                    <li class="col-sm-4">搜你想要</li>
+                </ul>
+                <div class="resp-tabs-container">
+                    <div>
+                        <select>
+                            <option>奥克兰</option>
+                            <option>基督城</option>
+                            <option>皇后镇</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select>
+                            <option>购物</option>
+                            <option>极限运动</option>
+                            <option>旅游观光</option>
+                        </select>
+                    </div>
+                    <div>
+                        <form>
+                            <input type="text" placeholder="海格立公园，天空塔">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
     {% if tnzlisting_list %}
         <ul>
             {% for listing in tnzlisting_list|slice:":12" %}
@@ -15,5 +47,7 @@
     {% else %}
         <p>No listing currently available</p>
     {% endif %}
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/easyResponsiveTabs.js' %}"></script>
     {% render_bundle 'index' 'js' %}
 {% endblock content %}

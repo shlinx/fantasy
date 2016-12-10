@@ -1,22 +1,113 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+$background-dark: rgba(70, 70, 70, 0.5);
+$background-grey: rgba(150, 150, 150, 0.5);
+$background-light: rgba(255, 255, 255, 0.7);
+
 body {
   position: relative;
+  font-family: 'source-han-sans-simplified-c', sans-serif !important;
 }
 
-header {
+header.menu {
   position: absolute;
   top: 0;
   z-index: 10;
 }
 
-.banner {
-  background-image: url("../images/new-zealand.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  min-height: 500px;
-  opacity: 0.8;
+select, input, a, button {
+  -moz-appearance:none;
+
+  &:focus {
+    outline: none;
+  }
+
+}
+
+select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
+
+.main {
+
+  >header {
+    height: 100vh;
+    position: relative;
+    background-color: rgba(70, 70, 70, 0.3);
+
+
+    #search-container {
+      padding-top: 30vh;
+
+      #search-tab {
+        background-color: $background-light;
+        padding: 4em;
+
+        .resp-tab-item, h2.resp-accordion {
+          margin: 0;
+          font-weight: normal;
+          text-align: center;
+          border: none;
+          font-size: 1.1em;
+          background-color: #FFFFFF;
+
+          &:hover {
+            background-color: $background-grey;
+            transition: 0.5s ease;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &.resp-tab-active {
+            color: #FFFFFF;
+            background-color: $background-dark;
+            margin: 0 !important;
+            border: none !important;
+            padding: 13px 15px !important;
+            transition: 0.5s ease;
+          }
+        }
+
+        .resp-tabs-container {
+          background-color: $background-dark;
+          min-height: 150px;
+          border: none !important;
+          border-bottom: solid 1px $background-light;
+
+          .resp-tab-content {
+            border: none !important;
+          }
+
+
+          select, input {
+            width: 80%;
+            margin: auto;
+            display: block;
+            height: 48px;
+            padding: 8px;
+            margin-top: 20px;
+            border-radius: 0;
+
+            &, & option {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    &:after {
+      content: '';
+      background: url("../images/new-zealand.jpg") 50% 50% no-repeat;
+      background-size: cover;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
 }
