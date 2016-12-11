@@ -4,12 +4,12 @@
 
 {% block content %}
     <header>
-        <div id="search-container" class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
+        <div id="search-container" class="col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
             <div id="search-tab">
                 <ul class="resp-tabs-list">
-                    <li class="col-sm-4">我想去哪</li>
-                    <li class="col-sm-4">感兴趣</li>
-                    <li class="col-sm-4">搜你想要</li>
+                    <li class="col-sm-4"><i class="fa fa-map-marker" aria-hidden="true"></i>我想去哪</li>
+                    <li class="col-sm-4"><i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>随便看看</li>
+                    <li class="col-sm-4"><i class="fa fa-search" aria-hidden="true"></i>搜你想要</li>
                 </ul>
                 <div class="resp-tabs-container">
                     <div>
@@ -47,7 +47,8 @@
     {% else %}
         <p>No listing currently available</p>
     {% endif %}
-    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'lib/easyResponsiveTabs.js' %}"></script>
     {% render_bundle 'index' 'js' %}
 {% endblock content %}

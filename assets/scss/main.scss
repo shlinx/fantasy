@@ -1,6 +1,9 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 
+$primary-color: #008cc9;
 $background-dark: rgba(70, 70, 70, 0.5);
 $background-grey: rgba(150, 150, 150, 0.5);
 $background-light: rgba(255, 255, 255, 0.7);
@@ -10,10 +13,44 @@ body {
   font-family: 'source-han-sans-simplified-c', sans-serif !important;
 }
 
+a {
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
 header.menu {
   position: absolute;
+  width: 100%;
+  background-color: transparent;
   top: 0;
   z-index: 10;
+
+  nav.navbar {
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+
+    .navbar-brand {
+      padding: 0;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .navbar-nav {
+
+      &>li {
+
+        &>a {
+          color: #FFFFFF !important;
+        }
+      }
+
+    }
+  }
+
 }
 
 select, input, a, button {
@@ -43,16 +80,25 @@ select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
         padding: 4em;
 
         .resp-tab-item, h2.resp-accordion {
+          color: $primary-color;
           margin: 0;
-          font-weight: normal;
+          font-weight: 200;
           text-align: center;
           border: none;
           font-size: 1.1em;
           background-color: #FFFFFF;
+          -webkit-user-select: none; /* Chrome/Safari */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* IE10+ */
+
+          i {
+            margin-right: 5px;
+          }
 
           &:hover {
             background-color: $background-grey;
             transition: 0.5s ease;
+            color: #FFFFFF;
           }
 
           &:focus {
@@ -62,6 +108,7 @@ select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
           &.resp-tab-active {
             color: #FFFFFF;
             background-color: $background-dark;
+            font-weight: 100;
             margin: 0 !important;
             border: none !important;
             padding: 13px 15px !important;
@@ -71,7 +118,6 @@ select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
 
         .resp-tabs-container {
           background-color: $background-dark;
-          min-height: 150px;
           border: none !important;
           border-bottom: solid 1px $background-light;
 
