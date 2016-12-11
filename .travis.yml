@@ -1,0 +1,30 @@
+language: python
+
+python:
+  - 3.5
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.4"
+
+env:
+  - DJANGO=1.10.3
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=fantasy.settings
+  - export PYTHONPATH=$HOME/builds/shlinx/fantasy
+  - export PIP_USE_MIRRORS=true
+
+install:
+  - pip install -r requirements.txt
+  - pip install django==$DJANGO --quiet
+
+before_script:
+  - psql -c "CREATE DATABASE travisci;" -U postgres
+  - echo "SECRET_KEY=i=20j##%7-b@w^+e@@ju*ze+)(9abn)5q4ymc1js6dh1g@h8h-\nENGINE=django.db.backends.postgresql\nHOST=localhost\nNAME=travisci\nUSER=postgres\nPASSWORD=" > .env
+  - python manage.py migrate --noinput
+
+script:
+  - python manage.py test
