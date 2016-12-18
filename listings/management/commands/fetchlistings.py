@@ -1,17 +1,31 @@
+"""
+The management command for fetching TNZ listings.
+Example: python manage.py --tags tag1 tag2 --market cn
+You can use --debug to output more information
+"""
 import os
-import requests
 import datetime
-from django.core.management.base import BaseCommand, CommandError
-from ...models import TNZListing, TNZTag, TNZRegion
+import requests
+
+from django.core.management.base import BaseCommand
+from ...models import TNZListing, TNZTag
 
 
 class Command(BaseCommand):
+    """
+    The TNZ listings fetcher
+    """
     help = 'Fetch listings.'
 
     api_key = os.environ.get('API_KEY')
     base_url = 'http://www.newzealand.com/api/rest/v1/deliver/listings?level=full&maxrows=30'
 
     def add_arguments(self, parser):
+        """
+        Add arguments for command
+        :param parser:
+        :return:
+        """
         parser.add_argument(
             '--tags',
             dest='tags',
@@ -33,6 +47,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        """
+        Handle the command
+        :param args:
+        :param options:
+        :return:
+        """
         if len(options['market']):
             url_wo_tag = self.base_url + '&display_market=' + options['market'][0]
         else:
@@ -46,8 +66,13 @@ class Command(BaseCommand):
             url = url_wo_tag + '&tag=' + tag
             self.fetch(url=url, debug=options['debug'])
 
-    def fetch(self, url: str, debug: bool = False):
-
+    def fetch(self, url: str, debug: bool=False):
+        """
+        Fetch listings from url
+        :param url:
+        :param debug:
+        :return:
+        """
         imported = 0
         updated = 0
 
@@ -62,7 +87,9 @@ class Command(BaseCommand):
         for listing in data['items']:
             listing_data = {
                 'name': listing['nameoflisting'],
-                'modified_date': datetime.datetime.strptime(listing['modified_date'], '%B, %d %Y %X'),
+                'modified_date': datetime.datetime.strptime(
+                    listing['modified_date'], '%B, %d %Y %X'
+                ),
                 'main_image': listing['assets'].get('main'),
                 'logo_image': listing['assets'].get('logo'),
                 # gallery image can be null
@@ -108,17 +135,22 @@ class Command(BaseCommand):
                 updated += 1
                 if debug:
                     self.stdout.write('Updated {name}'.format(name=listing['nameoflisting']))
-        else:
-            self.stdout.write('Successfully imported {imported} listing(s), updated {updated} listing(s)'
-                              .format(imported=imported, updated=updated))
-            if data['link']['next']:
-                self.fetch(data['link']['next'], debug)
+        self.stdout.write('Successfully imported {imported} listing(s),'
+                          ' updated {updated} listing(s)'
+                          .format(imported=imported, updated=updated))
+        if data['link']['next']:
+            self.fetch(data['link']['next'], debug)
 
-    def extract_image(self, original_data):
-        image_data = {
-            'o_id': original_data['o_id'],
-            'description': original_data['description'],
+def extract_image(original_data):
+    """
+    Extract image from the original data
+    :param original_data:
+    :return:
+    """
+    image_data = {
+        'o_id': original_data['o_id'],
+        'description': original_data['description'],
 
-        }
+    }
 
-        return image_data
+    return image_data
