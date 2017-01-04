@@ -145,7 +145,7 @@ select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
 
     &:after {
       content: '';
-      background: url("../images/new-zealand.jpg") 50% 50% no-repeat;
+      background: url("../static/images/new-zealand.jpg") 50% 50% no-repeat;
       background-size: cover;
       z-index: -1;
       position: absolute;

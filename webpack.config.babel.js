@@ -35,7 +35,7 @@ const config = {
             },
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&name=[name].[hash].[ext]&publicPath=../"
+                loader: "url-loader?limit=10000&name=fonts/[name].[hash].[ext]&publicPath=../"
             },
             {
                 test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
