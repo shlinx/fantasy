@@ -4,7 +4,8 @@
   "description": "'Fantasy NZ'",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --progress --colors --watch --config webpack.config.babel.js",
+    "dev": "webpack --progress --colors --config webpack.config.babel.js",
+    "dev:w": "npm run dev -- --watch",
     "test": "test"
   },
   "repository": {

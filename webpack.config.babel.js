@@ -8,15 +8,14 @@ import BundleTracker from 'webpack-bundle-tracker';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const config = {
-
     context: __dirname,
 
     entry: {
-        index: path.join(__dirname, './assets/js/index'),
-        listing: path.join(__dirname, './assets/js/listing')
+        index: path.join(__dirname, 'assets/js/index'),
+        listing: path.join(__dirname, 'assets/js/listing')
     },
     output: {
-        path: path.resolve('./static/'),
+        path: path.join(__dirname, 'dist'),
         filename: 'js/[name].[hash].js'
     },
     resolve: {
@@ -36,20 +35,20 @@ const config = {
             },
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&minetype=application/font-woff&name=./fonts/[hash].[ext]"
+                loader: "file-loader?name=fonts/[name].[hash].[ext]&publicPath=../"
             },
             {
                 test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?name=./fonts/[hash].[ext]"
+                loader: "file-loader?name=fonts/[name].[hash].[ext]&publicPath=../"
             },
             {
                 test: /\.(png|jpg|jpeg|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?name=./images/[hash].[ext]"
+                loader: "file-loader?name=images/[name].[hash].[ext]&publicPath=../"
             }
         ]
     },
     plugins: [
-        new BundleTracker({filename: './webpack-stats.json'}),
+        new BundleTracker({filename: 'webpack-stats.json'}),
         new ExtractTextPlugin('css/[name].[contenthash].css'),
         // new webpack.ProvidePlugin({
         //     $: 'jquery',
