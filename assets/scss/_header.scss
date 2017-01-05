@@ -67,13 +67,15 @@ header.menu {
 .main {
 
   >header {
-    height: 100vh;
+    height: 80vh;
+    min-height: 500px;
+    max-height: 700px;
     position: relative;
     background-color: rgba(70, 70, 70, 0.3);
 
 
     #search-container {
-      padding-top: 30vh;
+      padding-top: 130px;
 
       #search-tab {
         background-color: $background-light;
