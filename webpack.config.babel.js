@@ -16,7 +16,8 @@ const config = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'js/[name].[hash].js'
+        // filename: 'js/[name].[hash].js'
+        filename: 'js/[name].js'
     },
     resolve: {
         modulesDirectories: ['node_modules'],
@@ -34,22 +35,21 @@ const config = {
                 loader: ExtractTextPlugin.extract('style', 'css!sass')
             },
             {
-                test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&name=fonts/[name].[hash].[ext]&publicPath=../"
-            },
-            {
-                test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&name=fonts/[name].[hash].[ext]&publicPath=../"
+                test: /\.(ttf|eot|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                // loader: "url-loader?limit=10000&name=fonts/[name].[hash].[ext]&publicPath=../"
+                loader: "url-loader?limit=10000&name=fonts/[name].[ext]&publicPath=../"
             },
             {
                 test: /\.(png|jpg|jpeg|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&name=images/[name].[hash].[ext]&publicPath=../"
+                // loader: "url-loader?limit=10000&name=images/[name].[hash].[ext]&publicPath=../"
+                loader: "url-loader?limit=10000&name=images/[name].[ext]&publicPath=../"
             }
         ]
     },
     plugins: [
         new BundleTracker({filename: 'webpack-stats.json'}),
-        new ExtractTextPlugin('css/[name].[contenthash].css'),
+        // new ExtractTextPlugin('css/[name].[contenthash].css'),
+        new ExtractTextPlugin('css/[name].css'),
         // new webpack.ProvidePlugin({
         //     $: 'jquery',
         //     jQuery: 'jquery',
