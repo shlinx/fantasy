@@ -1,5 +1,4 @@
 Django==1.10.5
-python_dotenv==0.6.1
 requests==2.12.4
 django-extensions==1.7.5
 django-webpack-loader==0.4.1

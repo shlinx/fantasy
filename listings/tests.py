@@ -4,7 +4,6 @@ from django.test import TestCase
 from .models import TNZRegion
 from .models import TNZListing
 
-# Create your tests here.
 
 class TNZRegionTests(TestCase):
 
