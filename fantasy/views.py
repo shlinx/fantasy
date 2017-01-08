@@ -1,4 +1,7 @@
-from django.http import HttpResponse
+from django.views import generic
+from listings.models import TNZListing
 
-def index(request):
-    return HttpResponse('Hello')
+
+class Index(generic.ListView):
+    template_name = 'listings/index.html'
+    model = TNZListing

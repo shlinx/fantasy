@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views import generic
 
 from .models import TNZRegion
@@ -15,6 +14,7 @@ class Index(generic.ListView):
 class Region(generic.DetailView):
     template_name = 'listings/region.html'
     model = TNZRegion
+
 
 class Listing(generic.DeleteView):
     template_name = 'listings/listing.html'
