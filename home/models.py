@@ -4,6 +4,8 @@ from django.db import models
 
 from wagtail.wagtailcore.models import Page
 
+from listings.models import TNZListing
+
 
 class HomePage(Page):
-    pass
+    listings = TNZListing.objects.all()[:12]
