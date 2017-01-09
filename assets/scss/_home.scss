@@ -1,0 +1,120 @@
+@import "settings";
+
+.template-homepage {
+
+  header.banner {
+    height: 80vh;
+    min-height: 500px;
+    max-height: 700px;
+    position: relative;
+    background-color: rgba(70, 70, 70, 0.3);
+
+
+    #search-container {
+      padding-top: 130px;
+
+      #search-tab {
+        background-color: $background-light;
+        padding: 4em;
+
+        .resp-tab-item, h2.resp-accordion {
+          color: $primary-color;
+          margin: 0;
+          font-weight: 200;
+          text-align: center;
+          border: none;
+          font-size: 1.1em;
+          background-color: #FFFFFF;
+          -webkit-user-select: none; /* Chrome/Safari */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* IE10+ */
+
+          i {
+            margin-right: 5px;
+          }
+
+          &:hover {
+            background-color: $background-grey;
+            transition: 0.5s ease;
+            color: #FFFFFF;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &.resp-tab-active {
+            color: #FFFFFF;
+            background-color: $background-dark;
+            font-weight: 100;
+            margin: 0 !important;
+            border: none !important;
+            padding: 13px 15px !important;
+            transition: 0.5s ease;
+          }
+        }
+
+        .resp-tabs-container {
+          background-color: $background-dark;
+          border: none !important;
+          border-bottom: solid 1px $background-light;
+
+          .resp-tab-content {
+            border: none !important;
+          }
+
+
+          select, input {
+            width: 80%;
+            margin: 20px auto 0 auto;
+            display: block;
+            height: 48px;
+            padding: 8px;
+            border-radius: 0;
+
+            &, & option {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    &:after {
+      content: '';
+      background: url("../static/images/new-zealand.jpg") 50% 50% no-repeat;
+      background-size: cover;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .listings {
+    max-width: 1280px;
+    margin: auto;
+  }
+
+  .grid-item {
+    //margin-top: 20px;
+  }
+
+  .grid-item-container {
+    min-height: 300px;
+
+    header {
+      background-color: $background-darker;
+      text-align: center;
+      padding: 5px;
+      h4 {
+        font-weight: 200;
+        font-size: 1.2em;
+        color: #ffffff;
+      }
+    }
+  }
+
+}

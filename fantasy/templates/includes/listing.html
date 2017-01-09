@@ -1,3 +1,5 @@
-<div>
-    <a href="{% url 'listings:listing' listing.id %}">{{ listing.name }}</a>
-</div>
+<a href="{% url 'listings:listing' listing.id %}" class="grid-item-container" style="background-image: url({{ listing.get_main_image.url }})">
+    <header>
+        <h4>{{ listing.name }}</h4>
+    </header>
+</a>

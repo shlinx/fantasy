@@ -1,4 +1,5 @@
 @import "settings";
+@import "~breakpoint-sass/stylesheets/breakpoint";
 
 body {
   position: relative;
@@ -21,3 +22,38 @@ select, input, a, button {
 }
 
 select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
+
+// Mansonry styles
+
+.grid-sizer, .grid-item {
+  width: 100%;
+
+  @include breakpoint($screen-sm-min) {
+    width: 50%;
+  }
+
+  @include breakpoint($screen-md-min) {
+    width: percentage(1 / 3);
+  }
+
+  @include breakpoint($screen-lg-min) {
+    width: percentage(1 / 4);
+  }
+
+}
+
+.grid-item-container {
+  height: 100%;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.grid-item--width2 {
+  width: 40%;
+}
+
+.grid-item-height2 {
+  height: 800px;
+}

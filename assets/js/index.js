@@ -9,3 +9,13 @@ $('#search-tab').easyResponsiveTabs({
     fit: true,
     closed: true
 });
+
+let $grid = $('.grid').masonry({
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true
+});
+
+$grid.imagesLoaded().progress(() => {
+    $grid.mansonry('layout');
+});

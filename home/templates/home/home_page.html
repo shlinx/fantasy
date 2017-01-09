@@ -5,7 +5,7 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
-    <header>
+    <header class="banner">
         <div id="search-container" class="col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
             <div id="search-tab">
                 <ul class="resp-tabs-list">
@@ -38,19 +38,25 @@
             </div>
         </div>
     </header>
-    {% if page.listings %}
-        <ul>
+    <div class="listings">
+        {% if page.listings %}
+        <div class="grid">
+            <div class="grid-sizer"></div>
             {% for listing in page.listings %}
-                <li>
+                <div class="grid-item">
                 {% include 'includes/listing.html' %}
-                </li>
+                </div>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No listing currently available</p>
-    {% endif %}
+        </div>
+        {% else %}
+            <p>No listing currently available</p>
+        {% endif %}
+    </div>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript" src="{% static 'lib/easy-responsive-tabs/easyResponsiveTabs.js' %}"></script>
     {% render_bundle 'index' 'js' %}
 {% endblock content %}
