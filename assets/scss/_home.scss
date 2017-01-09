@@ -96,10 +96,16 @@
   .listings {
     max-width: 1280px;
     margin: auto;
+    padding: 20px;
+
+    @include breakpoint(max-width $screen-xs-min) {
+      max-width: 300px;
+      margin: auto;
+    }
   }
 
   .grid-item {
-    //margin-top: 20px;
+    margin-top: 30px;
   }
 
   .grid-item-container {

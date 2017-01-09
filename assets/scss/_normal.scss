@@ -28,18 +28,22 @@ select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
 .grid-sizer, .grid-item {
   width: 100%;
 
+  @include breakpoint($screen-xs-min) {
+    width: 48%;
+  }
+
   @include breakpoint($screen-sm-min) {
-    width: 50%;
+    width: percentage(1 / 3 - 0.04 * 2 / 3);
   }
 
   @include breakpoint($screen-md-min) {
-    width: percentage(1 / 3);
+    width: percentage(1 / 4 - 0.04 * 3 / 4);
   }
 
-  @include breakpoint($screen-lg-min) {
-    width: percentage(1 / 4);
-  }
+}
 
+.gutter-sizer {
+  width: 4%;
 }
 
 .grid-item-container {
