@@ -99,7 +99,7 @@
     padding: 20px;
 
     @include breakpoint(max-width $screen-xs-min) {
-      max-width: 300px;
+      max-width: 360px;
       margin: auto;
     }
   }
