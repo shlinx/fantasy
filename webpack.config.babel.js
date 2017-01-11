@@ -11,7 +11,10 @@ const config = {
     context: __dirname,
 
     entry: {
-        index: path.join(__dirname, 'assets/js/index'),
+        index: [
+            path.join(__dirname, 'assets/lib/easy-responsive-tabs/easyResponsiveTabs'),
+            path.join(__dirname, 'assets/js/index'),
+        ],
         listing: path.join(__dirname, 'assets/js/listing')
     },
     output: {
