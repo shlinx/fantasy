@@ -15,6 +15,8 @@ from __future__ import absolute_import, unicode_literals
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.utils.translation import ugettext_lazy as _
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -58,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -107,7 +110,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -117,6 +120,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('zh-hans', _('Simplified Chinese')),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

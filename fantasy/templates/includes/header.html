@@ -1,4 +1,8 @@
 {% load static %}
+{% load i18n %}
+
+{% get_available_languages as languages %}
+
 <header class="menu">
     <nav class="navbar">
         <div class="container-fluid col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
@@ -23,6 +27,20 @@
                     <li><a href="#">极限运动</a></li>
                     <li><a href="#">住宿</a></li>
                 </ul>
+                        {% comment %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">语言 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                          {% for lang_code, lang_name in languages %}
+                            {% language lang_code %}
+                              <li><a href="{{ request.get_full_path }}">{{ lang_name }}</a></li>
+                            {% endlanguage %}
+                          {% endfor %}
+                      </ul>
+                    </li>
+                  </ul>
+                        {% endcomment %}
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

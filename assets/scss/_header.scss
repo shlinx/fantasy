@@ -31,29 +31,25 @@ header.menu {
       }
     }
 
-    .navbar-nav {
+    .nav>li>a {
+      color: #FFFFFF !important;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      font-size: 1.1em;
 
-      &>li {
-
-        &>a {
-          color: #FFFFFF !important;
-          padding-top: 25px;
-          padding-bottom: 25px;
-          font-size: 1.1em;
-        }
+      &:hover, &:focus {
+        background-color: $background-dark;
       }
-
     }
 
     .navbar-collapse {
       border-top: none;
 
-      a:hover {
-        background-color: $background-dark;
-      }
-
       &.collapsing, &.in {
         background-color: $background-darkest;
+        @include breakpoint($screen-sm-min) {
+          background-color: transparent;
+        }
 
         a:hover {
           background-color: inherit;
