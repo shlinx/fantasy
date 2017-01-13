@@ -1,6 +1,6 @@
-import os
 import requests
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 from ...models import TNZRegion
 
 
@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Fetch regions'
 
     can_import_settings = True
-    api_key = os.environ.get('API_KEY')
+    api_key = settings.API_KEY
     base_url = 'http://www.newzealand.com/api/rest/v1/deliver/regions?level=simple'
 
     def add_arguments(self, parser):

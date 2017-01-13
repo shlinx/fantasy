@@ -3,11 +3,13 @@ The management command for fetching TNZ listings.
 Example: python manage.py --tags tag1 tag2 --market cn
 You can use --debug to output more information
 """
-import os
 import datetime
 import requests
 
 from django.core.management.base import BaseCommand
+from django.conf import settings
+from django.utils import timezone
+
 from ...models import TNZListing, TNZTag
 
 
@@ -17,7 +19,7 @@ class Command(BaseCommand):
     """
     help = 'Fetch listings.'
 
-    api_key = os.environ.get('API_KEY')
+    api_key = settings.API_KEY
     base_url = 'http://www.newzealand.com/api/rest/v1/deliver/listings?level=full&maxrows=30'
 
     def add_arguments(self, parser):
@@ -87,8 +89,8 @@ class Command(BaseCommand):
         for listing in data['items']:
             listing_data = {
                 'name': listing['nameoflisting'],
-                'modified_date': datetime.datetime.strptime(
-                    listing['modified_date'], '%B, %d %Y %X'
+                'modified_date': timezone.make_aware(datetime.datetime.strptime(
+                    listing['modified_date'], '%B, %d %Y %X')
                 ),
                 'main_image': listing['assets'].get('main'),
                 'logo_image': listing['assets'].get('logo'),
@@ -140,6 +142,7 @@ class Command(BaseCommand):
                           .format(imported=imported, updated=updated))
         if data['link']['next']:
             self.fetch(data['link']['next'], debug)
+
 
 def extract_image(original_data):
     """
