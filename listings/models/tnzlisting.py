@@ -1,41 +1,8 @@
-import ast
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField
 
-# Create your models here.
-
-
-class TNZTag(models.Model):
-    """
-    TNZ Tag model
-    """
-    unique_id = models.IntegerField()
-    o_id = models.IntegerField()
-    label = models.CharField(max_length=200)
-    listing_count = models.IntegerField()
-    name_key = models.CharField(max_length=200)
-    market = models.CharField(max_length=5)
-
-    def __str__(self):
-        return self.name_key
-
-
-class TNZRegion(models.Model):
-    """
-    TNZ Region model
-    """
-    unique_id = models.IntegerField()
-    o_id = models.IntegerField()
-    label = models.CharField(max_length=200)
-    name_key = models.CharField(max_length=50)
-    market = models.CharField(max_length=5)
-
-    def __str__(self):
-        return self.label
-
-    def listings(self):
-        all_listings = TNZListing.objects.filter(market='cn')
-        return [listing for listing in all_listings if listing.regionname == self.label]
+from .tnztag import TNZTag
+from .tnzimage import TNZImage
 
 
 class TNZListing(models.Model):
@@ -43,9 +10,6 @@ class TNZListing(models.Model):
     TNZ Listing model
     """
     name = models.CharField(max_length=200)
-    main_image = JSONField(null=True, blank=True)
-    logo_image = JSONField(null=True, blank=True)
-    gallery_images = JSONField(null=True, blank=True)
     """
     Original fields
     """
@@ -73,11 +37,25 @@ class TNZListing(models.Model):
     proximity_to_town = models.TextField()
     proximity_to_airport = models.TextField()
     freephone = models.CharField(max_length=50)
-    tags = JSONField(null=True)
-    listing_types = JSONField(null=True)
     booking_email = models.CharField(max_length=50)
     cancellation_policy = models.TextField()
-    parking = models.TextField()
+    parking = models.TextField(null=True, blank=True)
+    slug = models.SlugField(null=True)
+    listing_types = ArrayField(models.CharField(max_length=20), null=True)
+
+    tags = models.ManyToManyField(TNZTag)
+    main_image = models.OneToOneField(
+        TNZImage,
+        on_delete=models.CASCADE,
+        related_name='main_image_listing',
+        null=True,
+    )
+    logo_image = models.OneToOneField(
+        TNZImage,
+        on_delete=models.CASCADE,
+        related_name='logo_image_listing',
+        null=True
+    )
 
     def get_main_image(self):
         try:
