@@ -43,7 +43,11 @@ class TNZListing(models.Model):
     slug = models.SlugField(null=True)
     listing_types = ArrayField(models.CharField(max_length=20), null=True)
 
-    tags = models.ManyToManyField(TNZTag)
+    tags = models.ManyToManyField(
+        TNZTag,
+        related_name='listings',
+        null=True,
+    )
     main_image = models.OneToOneField(
         TNZImage,
         on_delete=models.CASCADE,
@@ -54,7 +58,7 @@ class TNZListing(models.Model):
         TNZImage,
         on_delete=models.CASCADE,
         related_name='logo_image_listing',
-        null=True
+        null=True,
     )
 
     def get_main_image(self):

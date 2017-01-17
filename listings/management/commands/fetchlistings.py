@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.utils import timezone
 
-from ...models import TNZListing, TNZTag
+from ...models import TNZListing, TNZTag, TNZImage, TNZImageInstance
 
 
 class Command(BaseCommand):
@@ -21,6 +21,10 @@ class Command(BaseCommand):
 
     api_key = settings.API_KEY
     base_url = 'http://www.newzealand.com/api/rest/v1/deliver/listings?level=full&maxrows=30'
+
+    UNCHANGED = 0
+    IMPORTED = 1
+    UPDATED = 2
 
     def add_arguments(self, parser):
         """
@@ -77,6 +81,7 @@ class Command(BaseCommand):
         """
         imported = 0
         updated = 0
+        unchanged = 0
 
         self.stdout.write('Fetching from {0}'.format(url))
         res = requests.get(url, headers={'Authorization': 'Bearer ' + self.api_key})
@@ -86,74 +91,158 @@ class Command(BaseCommand):
 
         data = res.json()
 
-        for listing in data['items']:
-            listing_data = {
-                'name': listing['nameoflisting'],
-                'modified_date': timezone.make_aware(datetime.datetime.strptime(
-                    listing['modified_date'], '%B, %d %Y %X')
-                ),
-                'main_image': listing['assets'].get('main'),
-                'logo_image': listing['assets'].get('logo'),
-                # gallery image can be null
-                'gallery_images': listing['assets'].get('gallery'),
-                'regionname': listing['regionname'],
-                'unique_id': listing['unique_id'],
-                'market': listing['market'],
-                'listing_description': listing['listing_description'],
-                'listing_summary': listing['listing_summary'],
-                'latitude': listing['latitude'],
-                'longitude': listing['longitude'],
-                'business_type': listing['business_type'],
-                'minimum_age': listing['minimum_age'],
-                'max_capacity': listing['max_capacity'],
-                'website_link': listing['website_link'],
-                'booking_link': listing['booking_link'],
-                'phone': listing['phone'],
-                'mobile': listing['mobile'],
-                'email': listing['email'],
-                'operational_hours': listing['operational_hours'],
-                'street': listing['street'],
-                'suburb': listing['suburb'],
-                'city': listing['city'],
-                'postcode': listing['postcode'],
-                'proximity_to_town': listing['proximity_to_town'],
-                'proximity_to_airport': listing['proximity_to_airport'],
-                'freephone': listing['freephone'],
-                'tags': listing['tags'],
-                'listing_types': listing['listing_types'],
-                'booking_email': listing['booking_email'],
-                'cancellation_policy': listing['cancellation_policy'],
-                'parking': listing['parking'],
-            }
+        for listing_data in data['items']:
+            listing, flag = self.save_listing(listing_data)
 
-            existings = TNZListing.objects.filter(unique_id=listing['unique_id'])
-            if not existings.exists():
-                TNZListing.objects.create(**listing_data)
+            if flag == self.IMPORTED:
                 imported += 1
                 if debug:
-                    self.stdout.write('Imported {name}'.format(name=listing['nameoflisting']))
-            else:
-                existings.update(**listing_data)
+                    self.stdout.write('Imported "{name}".'.format(name=listing.name))
+            elif flag == self.UPDATED:
                 updated += 1
                 if debug:
-                    self.stdout.write('Updated {name}'.format(name=listing['nameoflisting']))
+                    self.stdout.write('Updated "{name}".'.format(name=listing.name))
+            elif flag == self.UNCHANGED:
+                unchanged += 1
+                if debug:
+                    self.stdout.write('"{name}" not changed.'.format(name=listing.name))
         self.stdout.write('Successfully imported {imported} listing(s),'
-                          ' updated {updated} listing(s)'
-                          .format(imported=imported, updated=updated))
+                          ' updated {updated} listing(s),'
+                          ' {unchanged} listing(s) unchanged.'
+                          .format(imported=imported, updated=updated, unchanged=unchanged))
         if data['link']['next']:
             self.fetch(data['link']['next'], debug)
 
+    def save_listing(self, listing_data: dict):
+        """
+        Save a listing.
+        :param listing_data:
+        :return: (TNZListing, bool)
+        """
+        flag = self.UNCHANGED
+        listing_sorted_data = {
+            'name': listing_data['nameoflisting'],
+            'modified_date': timezone.make_aware(datetime.datetime.strptime(
+                listing_data['modified_date'], '%B, %d %Y %X')
+            ),
+            'regionname': listing_data['regionname'],
+            'unique_id': listing_data['unique_id'],
+            'market': listing_data['market'],
+            'listing_description': listing_data['listing_description'],
+            'listing_summary': listing_data['listing_summary'],
+            'latitude': listing_data['latitude'],
+            'longitude': listing_data['longitude'],
+            'business_type': listing_data['business_type'],
+            'minimum_age': listing_data['minimum_age'],
+            'max_capacity': listing_data['max_capacity'],
+            'website_link': listing_data['website_link'],
+            'booking_link': listing_data['booking_link'],
+            'phone': listing_data['phone'],
+            'mobile': listing_data['mobile'],
+            'email': listing_data['email'],
+            'operational_hours': listing_data['operational_hours'],
+            'street': listing_data['street'],
+            'suburb': listing_data['suburb'],
+            'city': listing_data['city'],
+            'postcode': listing_data['postcode'],
+            'proximity_to_town': listing_data['proximity_to_town'],
+            'proximity_to_airport': listing_data['proximity_to_airport'],
+            'freephone': listing_data['freephone'],
+            'tags': listing_data['tags'],
+            'listing_types': listing_data['listing_types'],
+            'booking_email': listing_data['booking_email'],
+            'cancellation_policy': listing_data['cancellation_policy'],
+            'parking': listing_data['parking'],
+        }
+        try:
+            listing = TNZListing.objects.get(unique_id=listing_sorted_data['unique_id'])
+        except TNZListing.DoesNotExist:
+            flag = self.IMPORTED
+            listing = TNZListing(listing_sorted_data)
+        else:
+            for key, value in listing_sorted_data.items():
+                if listing.getattr(key) != value:
+                    listing.setattr(key, value)
+                    flag = self.UPDATED
 
-def extract_image(original_data):
-    """
-    Extract image from the original data
-    :param original_data:
-    :return:
-    """
-    image_data = {
-        'o_id': original_data['o_id'],
-        'description': original_data['description'],
+        for image_type in ('main', 'logo'):
+            image_data = listing_data['assets'].get(image_type)
+            if image_data is not None:
+                for value in image_data:
+                    result = self.save_image(value)
+                    listing.setattr(image_type + '_image', result[0])
+                    if flag != self.IMPORTED and result[1] != self.UNCHANGED:
+                        flag = self.UPDATED
 
-    }
+        gallery_images_data = listing_data['assets'].get('gallery')
+        if gallery_images_data is not None:
+            for value in gallery_images_data:
+                result = self.save_image(value)
+                listing.gallery_images_set().add(result[0])
+                if flag != self.IMPORTED and result[1] != self.UNCHANGED:
+                    flag = self.UPDATED
 
-    return image_data
+        listing.save()
+
+        return listing, flag
+
+    def save_image(self, image_data):
+        """
+        Save a TNZImage. It will also save the related TNZImageInstance.
+        It will check image instance 'format' key as the unique key for the image.
+        :param image_data:
+        :return (TNZImage bool):
+        """
+        flag = self.UNCHANGED
+        image_sorted_data = {
+            'o_id': image_data['o_id'],
+            'unique_id': image_data['unique_id'],
+            'type_o_id': image_data['type_o_id'],
+            'description': image_data['description'],
+            'label': image_data['label'],
+            'width': image_data['width'],
+            'height': image_data['height'],
+            'order': image_data['order'],
+            'market': image_data['market'],
+            'latitude': image_data['latitude'],
+            'longitude': image_data['longitude'],
+            'asset_type': image_data['asset_type'],
+            'credit': image_data['credit'],
+            'exists': image_data['exists'],
+            'caption': image_data['caption'],
+            'url': image_data['url'],
+        }
+        try:
+            image = TNZImage.objects.get(unique_id=image_data['unique_id'])
+        except TNZImage.DoesNotExist:
+            image = TNZImage(image_sorted_data)
+            flag = self.IMPORTED
+        else:
+            for key, value in image_sorted_data.items():
+                if image.getattr(key) != value:
+                    image.setattr(key, value)
+                    flag = self.UPDATED
+
+        for instance_data in image_data['instances']:
+            instance_sorted_data = {
+                'provider_label': instance_data['provider_label'],
+                'format': instance_data['format'],
+                'width': instance_data['width'],
+                'height': instance_data['height'],
+                'url': instance_data['url'],
+            }
+            try:
+                instance = image.instances_set().get(format=instance_sorted_data['format'])
+            except TNZImageInstance.DoesNotExist:
+                instance = TNZImageInstance(instance_sorted_data)
+            else:
+                for key, value in instance_sorted_data.items():
+                    if instance.getattr(key) != value:
+                        instance.setattr(key, value)
+                        if flag != self.IMPORTED:
+                            flag = self.UPDATED
+
+            instance.save()
+            image.instances_set().add(instance)
+
+        return image, flag

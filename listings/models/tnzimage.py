@@ -22,7 +22,11 @@ class TNZImage(models.Model):
     caption = models.CharField(max_length=200)
     url = models.TextField()
 
-    gallery_image_listing = models.ForeignKey('TNZListing', on_delete=models.CASCADE, related_name='gallery_images')
+    gallery_image_listing = models.ForeignKey(
+        'TNZListing',
+        on_delete=models.CASCADE,
+        related_name='gallery_images',
+    )
 
 
 class TNZImageInstance(models.Model):
@@ -35,7 +39,11 @@ class TNZImageInstance(models.Model):
     height = models.SmallIntegerField()
     url = models.TextField()
 
-    image = models.ForeignKey(TNZImage, on_delete=models.CASCADE)
+    image = models.ForeignKey(
+        TNZImage,
+        on_delete=models.CASCADE,
+        related_name='instances',
+    )
 
 
 
