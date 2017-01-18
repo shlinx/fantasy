@@ -130,8 +130,8 @@ class Command(BaseCommand):
             'market': listing_data['market'],
             'listing_description': listing_data['listing_description'],
             'listing_summary': listing_data['listing_summary'],
-            'latitude': listing_data['latitude'],
-            'longitude': listing_data['longitude'],
+            'latitude': self.convert_latlng(listing_data['latitude']),
+            'longitude': self.convert_latlng(listing_data['longitude']),
             'business_type': listing_data['business_type'],
             'minimum_age': listing_data['minimum_age'],
             'max_capacity': listing_data['max_capacity'],
@@ -148,7 +148,6 @@ class Command(BaseCommand):
             'proximity_to_town': listing_data['proximity_to_town'],
             'proximity_to_airport': listing_data['proximity_to_airport'],
             'freephone': listing_data['freephone'],
-            'tags': listing_data['tags'],
             'listing_types': listing_data['listing_types'],
             'booking_email': listing_data['booking_email'],
             'cancellation_policy': listing_data['cancellation_policy'],
@@ -158,29 +157,43 @@ class Command(BaseCommand):
             listing = TNZListing.objects.get(unique_id=listing_sorted_data['unique_id'])
         except TNZListing.DoesNotExist:
             flag = self.IMPORTED
-            listing = TNZListing(listing_sorted_data)
+            listing = TNZListing(**listing_sorted_data)
         else:
             for key, value in listing_sorted_data.items():
-                if listing.getattr(key) != value:
-                    listing.setattr(key, value)
+                if getattr(listing, key) != value:
+                    setattr(listing, key, value)
                     flag = self.UPDATED
 
+        # Save main image and logo image
         for image_type in ('main', 'logo'):
             image_data = listing_data['assets'].get(image_type)
             if image_data is not None:
-                for value in image_data:
+                for key, value in image_data.items():
                     result = self.save_image(value)
-                    listing.setattr(image_type + '_image', result[0])
+                    setattr(listing, image_type + '_image', result[0])
                     if flag != self.IMPORTED and result[1] != self.UNCHANGED:
                         flag = self.UPDATED
 
+        listing.save()
+
+        # Save gallery images
         gallery_images_data = listing_data['assets'].get('gallery')
         if gallery_images_data is not None:
-            for value in gallery_images_data:
+            for key, value in gallery_images_data.items():
                 result = self.save_image(value)
-                listing.gallery_images_set().add(result[0])
+                listing.gallery_images.add(result[0])
                 if flag != self.IMPORTED and result[1] != self.UNCHANGED:
                     flag = self.UPDATED
+
+        tags_data = listing_data['tags']
+        if tags_data:
+            for tag_name in tags_data:
+                try:
+                    tag = TNZTag.objects.get(label=tag_name)
+                except TNZTag.DoesNotExist:
+                    raise
+                else:
+                    listing.tags.add(tag)
 
         listing.save()
 
@@ -202,10 +215,10 @@ class Command(BaseCommand):
             'label': image_data['label'],
             'width': image_data['width'],
             'height': image_data['height'],
-            'order': image_data['order'],
+            'order': image_data.get('order'),
             'market': image_data['market'],
-            'latitude': image_data['latitude'],
-            'longitude': image_data['longitude'],
+            'latitude': self.convert_latlng(image_data['latitude']),
+            'longitude': self.convert_latlng(image_data['longitude']),
             'asset_type': image_data['asset_type'],
             'credit': image_data['credit'],
             'exists': image_data['exists'],
@@ -215,13 +228,15 @@ class Command(BaseCommand):
         try:
             image = TNZImage.objects.get(unique_id=image_data['unique_id'])
         except TNZImage.DoesNotExist:
-            image = TNZImage(image_sorted_data)
+            image = TNZImage(**image_sorted_data)
             flag = self.IMPORTED
         else:
             for key, value in image_sorted_data.items():
-                if image.getattr(key) != value:
-                    image.setattr(key, value)
+                if getattr(image, key) != value:
+                    setattr(image, key, value)
                     flag = self.UPDATED
+
+        image.save()
 
         for instance_data in image_data['instances']:
             instance_sorted_data = {
@@ -232,17 +247,24 @@ class Command(BaseCommand):
                 'url': instance_data['url'],
             }
             try:
-                instance = image.instances_set().get(format=instance_sorted_data['format'])
+                instance = image.instances.get(format=instance_sorted_data['format'])
             except TNZImageInstance.DoesNotExist:
-                instance = TNZImageInstance(instance_sorted_data)
+                instance = TNZImageInstance(**instance_sorted_data)
             else:
+                instance.image = image
                 for key, value in instance_sorted_data.items():
-                    if instance.getattr(key) != value:
-                        instance.setattr(key, value)
+                    if getattr(instance, key) != value:
+                        setattr(instance, key, value)
                         if flag != self.IMPORTED:
                             flag = self.UPDATED
-
+            instance.image = image
             instance.save()
-            image.instances_set().add(instance)
 
         return image, flag
+
+    @staticmethod
+    def convert_latlng(value):
+        if not value:
+            return float(0)
+        else:
+            return float(value)

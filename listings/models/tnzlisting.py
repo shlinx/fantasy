@@ -45,8 +45,7 @@ class TNZListing(models.Model):
 
     tags = models.ManyToManyField(
         TNZTag,
-        related_name='listings',
-        null=True,
+        related_name='listings'
     )
     main_image = models.OneToOneField(
         TNZImage,

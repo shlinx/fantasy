@@ -12,7 +12,7 @@ class TNZImage(models.Model):
     label = models.CharField(max_length=50)
     width = models.SmallIntegerField()
     height = models.SmallIntegerField()
-    order = models.SmallIntegerField()
+    order = models.SmallIntegerField(null=True, blank=True)
     market = models.CharField(max_length=5)
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -26,6 +26,7 @@ class TNZImage(models.Model):
         'TNZListing',
         on_delete=models.CASCADE,
         related_name='gallery_images',
+        null=True
     )
 
 
