@@ -27,7 +27,7 @@ class TNZListing(models.Model):
     website_link = models.TextField()
     booking_link = models.TextField()
     phone = models.CharField(max_length=50)
-    mobile = models.CharField(max_length=50)
+    mobile = models.CharField(max_length=50, blank=True)
     email = models.EmailField()
     operational_hours = models.TextField()
     street = models.TextField()
@@ -47,13 +47,13 @@ class TNZListing(models.Model):
         TNZTag,
         related_name='listings'
     )
-    main_image = models.OneToOneField(
+    main_image = models.ForeignKey(
         TNZImage,
         on_delete=models.CASCADE,
         related_name='main_image_listing',
         null=True,
     )
-    logo_image = models.OneToOneField(
+    logo_image = models.ForeignKey(
         TNZImage,
         on_delete=models.CASCADE,
         related_name='logo_image_listing',

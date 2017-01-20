@@ -144,7 +144,7 @@ class Command(BaseCommand):
             'street': listing_data['street'],
             'suburb': listing_data['suburb'],
             'city': listing_data['city'],
-            'postcode': listing_data['postcode'],
+            'postcode': str(listing_data['postcode']),
             'proximity_to_town': listing_data['proximity_to_town'],
             'proximity_to_airport': listing_data['proximity_to_airport'],
             'freephone': listing_data['freephone'],
@@ -188,12 +188,11 @@ class Command(BaseCommand):
         tags_data = listing_data['tags']
         if tags_data:
             for tag_name in tags_data:
-                try:
-                    tag = TNZTag.objects.get(label=tag_name)
-                except TNZTag.DoesNotExist:
-                    raise
-                else:
-                    listing.tags.add(tag)
+                # There can be more than 1 tags having the same label.
+                tags = TNZTag.objects.filter(label=tag_name)
+                if tags.exists():
+                    for tag in tags:
+                        listing.tags.add(tag)
 
         listing.save()
 
