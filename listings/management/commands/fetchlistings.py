@@ -134,7 +134,7 @@ class Command(BaseCommand):
             'longitude': self.convert_latlng(listing_data['longitude']),
             'business_type': listing_data['business_type'],
             'minimum_age': listing_data['minimum_age'],
-            'max_capacity': listing_data['max_capacity'],
+            'max_capacity': str(listing_data['max_capacity']),
             'website_link': listing_data['website_link'],
             'booking_link': listing_data['booking_link'],
             'phone': listing_data['phone'],

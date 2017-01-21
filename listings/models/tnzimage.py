@@ -9,7 +9,7 @@ class TNZImage(models.Model):
     unique_id = models.IntegerField()
     type_o_id = models.IntegerField()
     description = models.TextField(null=True, blank=True)
-    label = models.CharField(max_length=200)
+    label = models.TextField()
     width = models.SmallIntegerField()
     height = models.SmallIntegerField()
     order = models.SmallIntegerField(null=True, blank=True)
@@ -17,9 +17,9 @@ class TNZImage(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     asset_type = models.CharField(max_length=20)
-    credit = models.CharField(max_length=200)
+    credit = models.TextField()
     exists = models.BooleanField()
-    caption = models.CharField(max_length=200)
+    caption = models.TextField(blank=True)
     url = models.TextField()
 
     gallery_image_listing = models.ForeignKey(
