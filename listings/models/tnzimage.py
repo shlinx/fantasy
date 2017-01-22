@@ -21,6 +21,7 @@ class TNZImage(models.Model):
     exists = models.BooleanField()
     caption = models.TextField(blank=True)
     url = models.TextField()
+    file = models.ImageField(upload_to='listings/', null=True)
 
     gallery_image_listing = models.ForeignKey(
         'TNZListing',
@@ -28,6 +29,17 @@ class TNZImage(models.Model):
         related_name='gallery_images',
         null=True
     )
+
+    def primary(self):
+        """
+        Get image instance for profile. Fallback to original if not find
+
+        :return:
+        """
+        try:
+            return self.instances.get(format='original')
+        except TNZImageInstance.DoesNotExist:
+            return None
 
 
 class TNZImageInstance(models.Model):
