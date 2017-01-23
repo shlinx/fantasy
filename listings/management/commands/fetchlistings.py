@@ -5,12 +5,15 @@ You can use --debug to output more information
 """
 import datetime
 import requests
+import os
+from urllib.parse import urlparse
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.utils import timezone
+from django.core.files import File
 
-from ...models import TNZListing, TNZTag, TNZImage, TNZImageInstance
+from ...models import TNZListing, TNZTag, TNZImage
 
 
 class Command(BaseCommand):
@@ -170,8 +173,8 @@ class Command(BaseCommand):
             if image_data is not None:
                 for key, value in image_data.items():
                     result = self.save_image(value)
-                    setattr(listing, image_type + '_image', result[0])
-                    if flag != self.IMPORTED and result[1] != self.UNCHANGED:
+                    if result[1] == self.IMPORTED:
+                        setattr(listing, image_type + '_image', result[0])
                         flag = self.UPDATED
 
         listing.save()
@@ -181,8 +184,8 @@ class Command(BaseCommand):
         if gallery_images_data is not None:
             for key, value in gallery_images_data.items():
                 result = self.save_image(value)
-                listing.gallery_images.add(result[0])
-                if flag != self.IMPORTED and result[1] != self.UNCHANGED:
+                if result[1] == self.IMPORTED:
+                    listing.gallery_images.add(result[0])
                     flag = self.UPDATED
 
         tags_data = listing_data['tags']
@@ -206,6 +209,9 @@ class Command(BaseCommand):
         :return (TNZImage bool):
         """
         flag = self.UNCHANGED
+        if image_data['asset_type'] != 'image':
+            return None, flag
+
         image_sorted_data = {
             'o_id': image_data['o_id'],
             'unique_id': image_data['unique_id'],
@@ -237,32 +243,36 @@ class Command(BaseCommand):
 
         image.save()
 
-        for instance_data in image_data['instances']:
-            instance_sorted_data = {
-                'provider_label': instance_data['provider_label'],
-                'format': instance_data['format'],
-                'width': instance_data['width'],
-                'height': instance_data['height'],
-                'url': instance_data['url'],
-            }
-            try:
-                instance = image.instances.get(format=instance_sorted_data['format'])
-            except TNZImageInstance.DoesNotExist:
-                instance = TNZImageInstance(**instance_sorted_data)
-            else:
-                instance.image = image
-                for key, value in instance_sorted_data.items():
-                    if getattr(instance, key) != value:
-                        setattr(instance, key, value)
-                        if flag != self.IMPORTED:
-                            flag = self.UPDATED
-            instance.image = image
-            instance.save()
+        for instance in image_data['instances']:
+            if instance['format'] == 'original' and not image.file.name:
+                try:
+                    url = instance['url']
+                    resource = requests.get(url, stream=True)
+                except requests.HTTPError:
+                    pass
+                else:
+                    if resource.status_code == 200:
+                        name = urlparse(url).path.split('/')[-1]
+                        temp_name = os.path.join(settings.MEDIA_ROOT, 'listings/temp_image')
+                        file = File(open(temp_name, 'wb'))
+                        for chunk in resource:
+                            file.write(chunk)
+                        file.close()
+                        file.open('rb')
+                        image.file.save(name, file)
+                        file.close()
+                        flag = self.IMPORTED
+                        break
 
         return image, flag
 
     @staticmethod
     def convert_latlng(value):
+        """
+        Convert latlng value from string to float
+        :param value:
+        :return float:
+        """
         if not value:
             return float(0)
         else:

@@ -30,33 +30,5 @@ class TNZImage(models.Model):
         null=True
     )
 
-    def primary(self):
-        """
-        Get image instance for profile. Fallback to original if not find
-
-        :return:
-        """
-        try:
-            return self.instances.get(format='original')
-        except TNZImageInstance.DoesNotExist:
-            return None
-
-
-class TNZImageInstance(models.Model):
-    """
-    The actual instance model for TNZImage
-    """
-    provider_label = models.CharField(max_length=50)
-    format = models.CharField(max_length=20)
-    width = models.SmallIntegerField()
-    height = models.SmallIntegerField()
-    url = models.TextField()
-
-    image = models.ForeignKey(
-        TNZImage,
-        on_delete=models.CASCADE,
-        related_name='instances',
-    )
-
 
 
