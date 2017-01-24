@@ -249,7 +249,7 @@ class Command(BaseCommand):
                     url = instance['url']
                     resource = requests.get(url, stream=True)
                 except requests.HTTPError:
-                    pass
+                    raise
                 else:
                     if resource.status_code == 200:
                         name = urlparse(url).path.split('/')[-1]
