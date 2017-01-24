@@ -6,6 +6,8 @@ from django.shortcuts import render
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch.models import Query
 
+from listings.models import TNZListing
+
 
 def search(request):
     search_query = request.GET.get('query', None)
@@ -13,13 +15,13 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Page.objects.live().search(search_query)
+        search_results = TNZListing.objects.filter(name__contains=search_query)
         query = Query.get(search_query)
 
         # Record hit
         query.add_hit()
     else:
-        search_results = Page.objects.none()
+        search_results = TNZListing.objects.none()
 
     # Pagination
     paginator = Paginator(search_results, 10)

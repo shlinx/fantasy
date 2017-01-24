@@ -19,8 +19,8 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^s/', include('listings.urls')),
-    url(r'^search/$', search_views.search, name='search'),
+    url(r'^listings/', include('listings.urls')),
+    url(r'^s/$', search_views.search, name='search'),
     url(r'', include(wagtail_urls)),
 )
 

@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
+    <h4>
         {{ tnzlisting.name }}
-    </div>
+    </h4>
+    <div><img src="{% if tnzlisting.main_image.file %}
+   {{ tnzlisting.main_image.file.url }}
+   {% endif %}"></div>
+    <div>business_type: {{ tnzlisting.business_type }}</div>
+    <div>regionname: {{ tnzlisting.regionname }}</div>
+    <div>listing_summary: {{ tnzlisting.listing_summary }}</div>
+    <div>listing_description: {{ tnzlisting.listing_description }}</div>
+    <div>latitude: {{ tnzlisting.latitude }}</div>
+    <div>minimum_age: {{ tnzlisting.minimum_age }}</div>
+    <div>website_link: {{ tnzlisting.website_link }}</div>
+    <div>booking_link: {{ tnzlisting.booking_link }}</div>
+    <div>phone: {{ tnzlisting.phone }}</div>
+    <div>mobile: {{ tnzlisting.mobile }}</div>
+    <div>email: {{ tnzlisting.email }}</div>
+    <div>operational_hours: {{ tnzlisting.operational_hours }}</div>
+    <div>street: {{ tnzlisting.street }}</div>
+    <div>suburb: {{ tnzlisting.suburb }}</div>
+    <div>postcode: {{ tnzlisting.postcode }}</div>
+    <div>proximity_to_town: {{ tnzlisting.proximity_to_town }}</div>
+    <div>proximity_to_airport: {{ tnzlisting.proximity_to_airport }}</div>
+    <div>freephone: {{ tnzlisting.freephone }}</div>
+    <div>listing_types: {{ tnzlisting.listing_types }}</div>
+    <div>booking_email: {{ tnzlisting.booking_email }}</div>
+    <div>cancellation_policy: {{ tnzlisting.cancellation_policy }}</div>
+    <div>parking: {{ tnzlisting.parking }}</div>
 {% endblock %}
