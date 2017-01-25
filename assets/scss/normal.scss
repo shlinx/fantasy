@@ -1,5 +1,7 @@
-@import "settings";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "~breakpoint-sass/stylesheets/breakpoint";
+
+@import "settings";
 
 body {
   position: relative;

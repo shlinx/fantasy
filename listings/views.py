@@ -7,7 +7,7 @@ from .models import TNZListing
 
 
 class Index(generic.ListView):
-    template_name = 'listings/index.html'
+    template_name = 'listings/listings.html'
     model = TNZListing
 
 
@@ -16,7 +16,13 @@ class Region(generic.DetailView):
     model = TNZRegion
 
 
-class Listing(generic.DeleteView):
+class ListingDetailView(generic.DetailView):
     template_name = 'listings/listing.html'
     model = TNZListing
+    context_object_name = 'listing'
+
+    def get_context_data(self, **kwargs):
+        context = super(ListingDetailView, self).get_context_data(**kwargs)
+
+        return context
 

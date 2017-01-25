@@ -2,6 +2,10 @@
 {% load static %}
 {% load render_bundle from webpack_loader %}
 
+{% block extra_css %}
+    {% render_bundle 'home' 'css' %}
+{% endblock extra_css %}
+
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
@@ -40,23 +44,23 @@
     </header>
     <div class="listings">
         {% if page.listings %}
-        <div class="grid">
-            <div class="grid-sizer"></div>
-            <div class="gutter-sizer"></div>
-            {% for listing in page.listings %}
-                <div class="grid-item">
-                {% include 'home/listing.html' %}
-                </div>
-            {% endfor %}
-        </div>
+            <div class="grid">
+                <div class="grid-sizer"></div>
+                <div class="gutter-sizer"></div>
+                {% for listing in page.listings %}
+                    <div class="grid-item">
+                        {% include 'home/listing.html' %}
+                    </div>
+                {% endfor %}
+            </div>
         {% else %}
             <p>No listing currently available</p>
         {% endif %}
     </div>
+{% endblock content %}
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block extra_js %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
-    {% render_bundle 'index' 'js' %}
-{% endblock content %}
+    {% render_bundle 'home' 'js' %}
+{% endblock extra_js %}
