@@ -1,6 +1,5 @@
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "~breakpoint-sass/stylesheets/breakpoint";
-
 @import "settings";
 
 body {
@@ -15,7 +14,7 @@ a {
 }
 
 select, input, a, button {
-  -moz-appearance:none;
+  -moz-appearance: none;
 
   &:focus {
     outline: none;
@@ -23,10 +22,19 @@ select, input, a, button {
 
 }
 
-select:-moz-focusring {color: transparent; text-shadow: 0 0 0 #000;}
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
 
-// Mansonry styles
+img {
+  display: block;
+  max-width: 100%;
+}
 
+/**
+Mansonry styles
+ */
 .grid-sizer, .grid-item {
   width: 100%;
 

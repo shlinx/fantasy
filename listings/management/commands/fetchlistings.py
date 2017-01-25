@@ -75,6 +75,8 @@ class Command(BaseCommand):
             url = url_wo_tag + '&tag=' + tag
             self.fetch(url=url, debug=options['debug'])
 
+        self.stdout('Fetching listings successfully finished.')
+
     def fetch(self, url: str, debug: bool=False):
         """
         Fetch listings from url

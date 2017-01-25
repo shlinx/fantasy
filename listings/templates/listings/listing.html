@@ -2,15 +2,23 @@
 {% load render_bundle from webpack_loader %}
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
     {% render_bundle 'listing' 'css' %}
 {% endblock extra_css %}
 {% block content %}
     <h4>
         {{ listing.name }}
     </h4>
-    <div><img src="{% if listing.main_image.file %}
-   {{ listing.main_image.file.url }}
-   {% endif %}"></div>
+
+    {% if listing.gallery_images.count %}
+        <div class="slick">
+            {% for image in listing.gallery_images.all %}
+                <div class="slick-item">
+                    <img src="{{ image.file.url }}">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div>business_type: {{ listing.business_type }}</div>
     <div>regionname: {{ listing.regionname }}</div>
     <div>listing_summary: {{ listing.listing_summary }}</div>
