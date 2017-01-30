@@ -233,40 +233,34 @@ class Command(BaseCommand):
             'url': image_data['url'],
         }
         try:
-            image = TNZImage.objects.get(unique_id=image_data['unique_id'])
+            return TNZImage.objects.get(unique_id=image_data['unique_id'])
         except TNZImage.DoesNotExist:
             image = TNZImage(**image_sorted_data)
             flag = self.IMPORTED
-        else:
-            for key, value in image_sorted_data.items():
-                if getattr(image, key) != value:
-                    setattr(image, key, value)
-                    flag = self.UPDATED
+            image.save()
 
-        image.save()
+            for instance in image_data['instances']:
+                if instance['format'] == 'original' and not image.file.name:
+                    try:
+                        url = instance['url']
+                        resource = requests.get(url, stream=True)
+                    except requests.HTTPError:
+                        raise
+                    else:
+                        if resource.status_code == 200:
+                            name = urlparse(url).path.split('/')[-1]
+                            temp_name = os.path.join(settings.MEDIA_ROOT, 'listings/temp_image')
+                            file = File(open(temp_name, 'wb'))
+                            for chunk in resource:
+                                file.write(chunk)
+                            file.close()
+                            file.open('rb')
+                            image.file.save(name, file)
+                            file.close()
+                            flag = self.IMPORTED
+                            break
 
-        for instance in image_data['instances']:
-            if instance['format'] == 'original' and not image.file.name:
-                try:
-                    url = instance['url']
-                    resource = requests.get(url, stream=True)
-                except requests.HTTPError:
-                    raise
-                else:
-                    if resource.status_code == 200:
-                        name = urlparse(url).path.split('/')[-1]
-                        temp_name = os.path.join(settings.MEDIA_ROOT, 'listings/temp_image')
-                        file = File(open(temp_name, 'wb'))
-                        for chunk in resource:
-                            file.write(chunk)
-                        file.close()
-                        file.open('rb')
-                        image.file.save(name, file)
-                        file.close()
-                        flag = self.IMPORTED
-                        break
-
-        return image, flag
+            return image, flag
 
     @staticmethod
     def convert_latlng(value):

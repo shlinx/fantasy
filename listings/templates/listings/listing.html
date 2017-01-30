@@ -6,19 +6,22 @@
     {% render_bundle 'listing' 'css' %}
 {% endblock extra_css %}
 {% block content %}
-    <h4>
-        {{ listing.name }}
-    </h4>
+    <header class="banner">
+        <h3 class="title">
+            {{ listing.name }}
+        </h3>
 
-    {% if listing.gallery_images.count %}
-        <div class="slick">
-            {% for image in listing.gallery_images.all %}
-                <div class="slick-item">
-                    <img src="{{ image.file.url }}">
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        {% if listing.gallery_images.count %}
+            <div class="slick">
+                {% for image in listing.gallery_images.all %}
+                    <div class="slick-item">
+                        <img src="{{ image.file.url }}">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </header>
+
     <div>business_type: {{ listing.business_type }}</div>
     <div>regionname: {{ listing.regionname }}</div>
     <div>listing_summary: {{ listing.listing_summary }}</div>

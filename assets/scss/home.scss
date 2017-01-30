@@ -114,14 +114,27 @@
   .grid-item-container {
     min-height: 300px;
 
+    &:hover {
+      header {
+        background-color: $background-light;
+      }
+
+      h4 {
+        color: $primary-color;
+      }
+    }
+
     header {
       background-color: $background-darker;
       text-align: center;
       padding: 5px;
+      transition: .7s;
+
       h4 {
         font-weight: 200;
         font-size: 1.2em;
         color: #ffffff;
+        transition: .7s;
       }
     }
   }

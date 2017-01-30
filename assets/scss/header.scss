@@ -1,7 +1,7 @@
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "settings";
 
-header.menu {
+.menu {
   position: absolute;
   width: 100%;
   background-color: transparent;
@@ -12,7 +12,7 @@ header.menu {
     padding: 10px;
   }
 
-  nav.navbar {
+  .navbar {
     background-color: transparent;
     text-align: center;
     border: none;
@@ -40,6 +40,7 @@ header.menu {
 
       &:hover, &:focus {
         background-color: $background-dark;
+        transition: 1s;
       }
     }
 

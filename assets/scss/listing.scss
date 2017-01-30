@@ -1,3 +1,42 @@
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
 @import "settings";
+
+.menu > .navbar {
+  background-color: $background-darker;
+}
+
+.banner {
+  .title {
+    position: absolute;
+    background-color: $background-darker;
+    color: #ffffff;
+    top: 200px;
+    text-align: center;
+    z-index: 101;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    left: 50%;
+    padding: 30px 50px;
+  }
+
+  .slick-track {
+    height: 500px;
+    background-color: $background-darker;
+
+    img {
+      width: 100%;
+      margin: auto;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+  }
+}
