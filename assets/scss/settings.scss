@@ -5,5 +5,7 @@ $background-darkest: rgba(70, 70, 70, 0.9);
 $background-darker: rgba(70, 70, 70, 0.7);
 $background-dark: rgba(70, 70, 70, 0.5);
 $background-grey: rgba(150, 150, 150, 0.5);
-$background-light: rgba(255, 255, 255, 0.7);
+$background-light: rgba(255, 255, 255, 0.5);
+$background-lighter: rgba(255, 255, 255, 0.7);
+$background-lightest: rgba(255, 255, 255, 0.9);
 @import "~breakpoint-sass/stylesheets/breakpoint";

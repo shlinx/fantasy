@@ -116,7 +116,7 @@
 
     &:hover {
       header {
-        background-color: $background-light;
+        background-color: $background-lighter;
       }
 
       h4 {
@@ -128,13 +128,13 @@
       background-color: $background-darker;
       text-align: center;
       padding: 5px;
-      transition: .7s;
+      transition: .5s;
 
       h4 {
         font-weight: 200;
         font-size: 1.2em;
         color: #ffffff;
-        transition: .7s;
+        transition: .5s;
       }
     }
   }
