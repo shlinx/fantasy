@@ -2,7 +2,9 @@
 {% load render_bundle from webpack_loader %}
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
+    {% render_bundle 'common' 'css' %}
     {% render_bundle 'listing' 'css' %}
 {% endblock extra_css %}
 {% block content %}
@@ -24,46 +26,45 @@
 
     <div class="content">
         <div class="col-md-12 col-lg-offset-1 col-lg-10">
-        <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-8">
-            <div class="col-xs-12">
-                <p>{{ listing.listing_description }}</p>
-            </div>
-            <div class="col-xs-12">
-                联系信息
-                <div>website_link: {{ listing.website_link }}</div>
-                <div>booking_link: {{ listing.booking_link }}</div>
-                <div>booking_email: {{ listing.booking_email }}</div>
-                <div>phone: {{ listing.phone }}</div>
-                <div>freephone: {{ listing.freephone }}</div>
-                <div>mobile: {{ listing.mobile }}</div>
-                <div>email: {{ listing.email }}</div>
-            </div>
-            <div class="col-xs-12">
-                营业信息
-                <div>operational_hours: {{ listing.operational_hours }}</div>
-                <div>listing_types: {{ listing.listing_types }}</div>
-                <div>cancellation_policy: {{ listing.cancellation_policy }}</div>
-                <div>parking: {{ listing.parking }}</div>
-            </div>
-        </div>
-        <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-4">
-            <div class="col-xs-12">
-                <h4>位于{{ listing.regionname }}</h4>
-                <div id="map"
-                     class="col-xs-12"
-                     data-latitude="{{ listing.latitude }}"
-                     data-longitude="{{ listing.longitude }}">
+            <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-8">
+                <div class="col-xs-12">
+                    <p>{{ listing.listing_description }}</p>
                 </div>
-                <address>
-                    <div>距离城镇 {{ listing.proximity_to_town }}</div>
-                    <div>距离机场 {{ listing.proximity_to_airport }}</div>
-                    <div>详细地址 {{ listing.street }} {{ listing.suburb }} {{ listing.postcode }}</div>
-                </address>
+                <div class="col-xs-12">
+                    联系信息
+                    <div>website_link: {{ listing.website_link }}</div>
+                    <div>booking_link: {{ listing.booking_link }}</div>
+                    <div>booking_email: {{ listing.booking_email }}</div>
+                    <div>phone: {{ listing.phone }}</div>
+                    <div>freephone: {{ listing.freephone }}</div>
+                    <div>mobile: {{ listing.mobile }}</div>
+                    <div>email: {{ listing.email }}</div>
+                </div>
+                <div class="col-xs-12">
+                    营业信息
+                    <div>operational_hours: {{ listing.operational_hours }}</div>
+                    <div>listing_types: {{ listing.listing_types }}</div>
+                    <div>cancellation_policy: {{ listing.cancellation_policy }}</div>
+                    <div>parking: {{ listing.parking }}</div>
+                </div>
+            </div>
+            <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-4">
+                <div class="col-xs-12">
+                    <h4>位于{{ listing.regionname }}</h4>
+                    <div id="map"
+                         class="col-xs-12"
+                         data-latitude="{{ listing.latitude }}"
+                         data-longitude="{{ listing.longitude }}">
+                    </div>
+                    <address>
+                        <div class="item-margin">距离城镇 {{ listing.proximity_to_town }}</div>
+                        <div class="item-margin">距离机场 {{ listing.proximity_to_airport }}</div>
+                        <div class="item-margin">详细地址 {{ listing.street }} {{ listing.suburb }} {{ listing.postcode }}</div>
+                    </address>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-
 
 {% endblock content %}
 
