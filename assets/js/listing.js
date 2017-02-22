@@ -15,3 +15,19 @@ $('.slick').slick({
     autoplaySpeed: 4000,
     arrows: false
 });
+
+(function initMap() {
+    let $map = $('#map'),
+        position = {
+            lat: $map.data('latitude'),
+            lng: $map.data('longitude')
+        },
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: position
+        }),
+        marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+})();
