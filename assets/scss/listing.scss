@@ -3,13 +3,13 @@
 @import "settings";
 
 .menu > .navbar {
-  background-color: $background-darker;
+  background-color: $background-darkest;
 }
 
 .banner {
   .title {
     position: absolute;
-    background-color: $background-darker;
+    background-color: $background-darkest;
     color: #ffffff;
     top: 200px;
     text-align: center;

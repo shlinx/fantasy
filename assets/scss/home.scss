@@ -113,29 +113,50 @@
 
   .grid-item-container {
     min-height: 300px;
+    position: relative;
+    overflow: hidden;
 
     &:hover {
-      header {
-        background-color: $background-lighter;
-      }
-
-      h4 {
-        color: $primary-color;
+      .summary {
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
       }
     }
 
-    header {
+    header, .summary {
       background-color: $background-darker;
       text-align: center;
       padding: 5px;
-      transition: .5s;
+
+      h4, p {
+        color: #ffffff;
+        transition: .5s;
+      }
 
       h4 {
         font-weight: 200;
         font-size: 1.2em;
-        color: #ffffff;
-        transition: .5s;
       }
+
+      p {
+        font-weight: 100;
+        text-align: left;
+      }
+    }
+
+    .summary {
+      position: absolute;
+      padding: 10px;
+      transition: .3s;
+      -webkit-transform: translateY(100%);
+      -moz-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+      -o-transform: translateY(100%);
+      transform: translateY(100%);
+      bottom: 0;
     }
   }
 
