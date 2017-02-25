@@ -121,7 +121,7 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en', _('English')),
+    # ('en', _('English')),
     ('zh-hans', _('Simplified Chinese')),
 ]
 

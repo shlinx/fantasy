@@ -36,12 +36,16 @@ img {
   max-width: 100%;
 }
 
-.item-margin {
+.margin-item {
   margin-bottom: 5px;
 }
 
+.value {
+  font-weight: bolder;
+}
+
 /**
-Mansonry styles
+Masonry styles
  */
 .grid-sizer, .grid-item {
   width: 100%;

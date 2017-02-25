@@ -24,28 +24,60 @@
         {% endif %}
     </header>
 
-    <div class="content">
+    <div class="content row">
         <div class="col-md-12 col-lg-offset-1 col-lg-10">
             <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-8">
-                <div class="col-xs-12">
-                    <p>{{ listing.listing_description }}</p>
+                <div class="description col-xs-12">
+                    {% if listing.listing_description %}
+                        <p>{{ listing.listing_description }}</p>
+                    {% endif %}
+                    {% if listing.listing_types|length %}
+                        <div class="tags">标签: <span class="value">{{ listing.listing_types_string }}</span></div>
+                    {% endif %}
                 </div>
-                <div class="col-xs-12">
-                    联系信息
-                    <div>website_link: {{ listing.website_link }}</div>
-                    <div>booking_link: {{ listing.booking_link }}</div>
-                    <div>booking_email: {{ listing.booking_email }}</div>
-                    <div>phone: {{ listing.phone }}</div>
-                    <div>freephone: {{ listing.freephone }}</div>
-                    <div>mobile: {{ listing.mobile }}</div>
-                    <div>email: {{ listing.email }}</div>
+                <div class="contact col-xs-12">
+                    {% if listing.website_link %}
+                        <div class="margin-item">网址: <a class="value" href="{{ listing.website_link }}"
+                                                        target="_blank">{{ listing.website_link }}</a></div>
+                    {% endif %}
+                    {% if listing.booking_link %}
+                        <div class="margin-item">订票地址: <a class="value" href="{{ listing.booking_link }}"
+                                                          target="_blank">{{ listing.booking_link }}</a></div>
+                    {% endif %}
+                    {% if listing.booking_email %}
+                        <div class="margin-item"><a class="value"
+                                                    href="mailto:{{ listing.booking_email }}">订票邮箱: {{ listing.booking_email }}</a>
+                        </div>
+                    {% endif %}
+                    {% if listing.phone %}
+                        <div class="margin-item">电话: <a class="value"
+                                                        href="tel:{{ listing.phone }}">{{ listing.phone }}</a></div>
+                    {% endif %}
+                    {% if listing.freephone %}
+                        <div class="margin-item">免费电话: <a class="value"
+                                                          href="tel:{{ listing.freephone }}">{{ listing.freephone }}</a>
+                        </div>
+                    {% endif %}
+                    {% if listing.mobile %}
+                        <div class="margin-item">移动电话: <a class="value"
+                                                          href="tel:{{ listing.mobile }}">{{ listing.mobile }}</a></div>
+                    {% endif %}
+                    {% if listing.email %}
+                        <div class="margin-item">邮箱: <a class="value"
+                                                        href="mailto:{{ listing.email }}">{{ listing.email }}</a></div>
+                    {% endif %}
                 </div>
-                <div class="col-xs-12">
-                    营业信息
-                    <div>operational_hours: {{ listing.operational_hours }}</div>
-                    <div>listing_types: {{ listing.listing_types }}</div>
-                    <div>cancellation_policy: {{ listing.cancellation_policy }}</div>
-                    <div>parking: {{ listing.parking }}</div>
+                <div class="information col-xs-12">
+                    {% if listing.operational_hours %}
+                        <div class="margin-item">营业时间: <span class="value">{{ listing.operational_hours }}</span></div>
+                    {% endif %}
+                    {% if listing.cancellation_policy %}
+                        <div class="margin-item">退票条款: <span class="value">{{ listing.cancellation_policy }}</span>
+                        </div>
+                    {% endif %}
+                    {% if listing.parking %}
+                        <div class="margin-item">泊车信息: <span class="value">{{ listing.parking }}</span></div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-4">
@@ -57,9 +89,15 @@
                          data-longitude="{{ listing.longitude }}">
                     </div>
                     <address>
-                        <div class="item-margin">距离城镇 {{ listing.proximity_to_town }}</div>
-                        <div class="item-margin">距离机场 {{ listing.proximity_to_airport }}</div>
-                        <div class="item-margin">详细地址 {{ listing.street }} {{ listing.suburb }} {{ listing.postcode }}</div>
+                        {% if listing.proximity_to_town %}
+                            <div class="margin-item">距离城镇：{{ listing.proximity_to_town }}</div>
+                        {% endif %}
+                        {% if listing.proximity_to_airport %}
+                            <div class="margin-item">距离机场：{{ listing.proximity_to_airport }}</div>
+                        {% endif %}
+                        {% if listing.address %}
+                            <div class="margin-item">详细地址：{{ listing.address }}</div>
+                        {% endif %}
                     </address>
                 </div>
             </div>

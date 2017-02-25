@@ -62,3 +62,10 @@ class TNZListing(models.Model):
 
     def __str__(self):
         return self.name
+
+    def listing_types_string(self):
+        return '、 '.join(self.listing_types)
+
+    def address(self):
+        return ' '.join((self.street, self.suburb, self.postcode))
+
