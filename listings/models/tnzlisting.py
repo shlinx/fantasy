@@ -69,3 +69,9 @@ class TNZListing(models.Model):
     def address(self):
         return ' '.join((self.street, self.suburb, self.postcode))
 
+    def slider_images(self):
+        if self.gallery_images.count():
+            return self.gallery_images.all()
+        if self.main_image.file:
+            return [self.main_image]
+        return ()

@@ -2,6 +2,9 @@
 @import "../lib/easy-responsive-tabs/easy-responsive-tabs";
 
 @import "settings";
+@import "common";
+@import "header";
+@import "footer";
 
 .template-homepage {
 
@@ -97,14 +100,8 @@
   }
 
   .listings {
-    max-width: 1280px;
-    margin: auto;
-    padding: 20px;
-
-    @include breakpoint(max-width $screen-xs-min) {
-      max-width: 360px;
-      margin: auto;
-    }
+    padding-top: 50px;
+    padding-bottom: 80px;
   }
 
   .grid-item {

@@ -13,19 +13,21 @@
             {{ listing.name }}
         </h3>
 
-        {% if listing.gallery_images.count %}
+        {% if listing.slider_images|length %}
             <div class="slick">
-                {% for image in listing.gallery_images.all %}
+                {% for image in listing.slider_images %}
                     <div class="slick-item">
                         <img src="{{ image.file.url }}">
                     </div>
                 {% endfor %}
             </div>
+        {% else %}
+
         {% endif %}
     </header>
 
     <div class="content row">
-        <div class="col-md-12 col-lg-offset-1 col-lg-10">
+        <div class="container">
             <div class="col-sm-offset-2 col-sm-8 col-md-offset-0 col-md-8">
                 <div class="description col-xs-12">
                     {% if listing.listing_description %}

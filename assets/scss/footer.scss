@@ -1,0 +1,29 @@
+@import "settings";
+@import "common";
+
+$footer-height: 100px;
+
+footer {
+  background-color: $background-darkest;
+  color: #ffffff;
+
+  a {
+    color: #ffffff;
+  }
+
+  ul {
+    display: block;
+    height: $footer-height;
+    margin: 0;
+  }
+
+  li {
+    list-style: none;
+    display: inline-block;
+    float: left;
+    height: 100%;
+    font-size: 1.1em;
+    font-weight: 200;
+    line-height: $footer-height * 0.618;
+  }
+}

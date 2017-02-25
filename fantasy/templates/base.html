@@ -28,8 +28,6 @@
           href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
           href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    {% render_bundle 'common' 'css' %}
-
     {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
     {% endblock %}
@@ -68,12 +66,11 @@
 {% include 'header.html' %}
 
 {% block content %}{% endblock content %}
-
+{% include 'footer.html' %}
 {# Global javascript #}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% render_bundle 'common' 'js' %}
-
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}
 {% endblock %}
