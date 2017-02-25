@@ -113,27 +113,14 @@
     position: relative;
     overflow: hidden;
 
-    @include breakpoint(min-width $screen-md-min) {
-      &:hover {
-        .summary {
-          -webkit-transform: translateY(0);
-          -moz-transform: translateY(0);
-          -ms-transform: translateY(0);
-          -o-transform: translateY(0);
-          transform: translateY(0);
-        }
-      }
-    }
-
-
     header, .summary {
       background-color: $background-darker;
       text-align: center;
       padding: 5px;
+      width: 100%;
 
       h4, p {
         color: #ffffff;
-        transition: .5s;
       }
 
       h4 {
@@ -150,7 +137,6 @@
     .summary {
       position: absolute;
       padding: 10px;
-      transition: .3s;
       bottom: 0;
     }
 

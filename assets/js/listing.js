@@ -11,8 +11,8 @@ $('.slick').slick({
     fade: true,
     pauseOnHover: false,
     pauseOnFocus: false,
-    speed: 3000,
-    autoplaySpeed: 4000,
+    speed: 2000,
+    autoplaySpeed: 2000,
     arrows: false
 });
 
