@@ -55,7 +55,8 @@ INSTALLED_APPS = [
 
     'listings.apps.ListingsConfig',
     'django_extensions',
-    'webpack_loader'
+    'webpack_loader',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

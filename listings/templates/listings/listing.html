@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load render_bundle from webpack_loader %}
+{% load thumbnail %}
+
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
     <link rel="stylesheet" type="text/css"
@@ -17,7 +19,9 @@
             <div class="slick">
                 {% for image in listing.slider_images %}
                     <div class="slick-item">
-                        <img src="{{ image.file.url }}">
+                        {% thumbnail image.file '1280x500' crop='center' as image %}
+                            <img src="{{ image.url }}">
+                        {% endthumbnail %}
                     </div>
                 {% endfor %}
             </div>
