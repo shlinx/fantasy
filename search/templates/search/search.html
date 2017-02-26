@@ -1,11 +1,20 @@
 {% extends "base.html" %}
+
+{% load render_bundle from webpack_loader %}
 {% load static wagtailcore_tags %}
+
+{% block extra_css %}
+    {% render_bundle 'search' 'css' %}
+{% endblock extra_css %}
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}Search{% endblock %}
+{% block title %}新西兰旅游, 度假信息 - 梦幻新西兰{% endblock %}
 
 {% block content %}
+    <header class="banner">
+
+    </header>
     <h1>Search</h1>
 
     <form action="{% url 'search' %}" method="get">
@@ -33,3 +42,7 @@
         No results found
     {% endif %}
 {% endblock %}
+
+{% block extra_js %}
+    {% render_bundle 'search' 'js' %}
+{% endblock extra_js %}

@@ -44,6 +44,14 @@ img {
   font-weight: bolder;
 }
 
+header.banner {
+  height: 80vh;
+  min-height: 500px;
+  max-height: 700px;
+  position: relative;
+  background-color: rgba(70, 70, 70, 0.3);
+}
+
 /**
 Masonry styles
  */

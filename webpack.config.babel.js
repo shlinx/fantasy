@@ -16,7 +16,8 @@ const config = {
             path.join(__dirname, 'assets/lib/easy-responsive-tabs/easyResponsiveTabs'),
             path.join(__dirname, 'assets/js/home'),
         ],
-        listing: path.join(__dirname, 'assets/js/listing')
+        listing: path.join(__dirname, 'assets/js/listing'),
+        search: path.join(__dirname, 'assets/js/search'),
     },
     output: {
         path: path.join(__dirname, 'dist'),

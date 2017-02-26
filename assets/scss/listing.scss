@@ -5,10 +5,6 @@
 @import "header";
 @import "footer";
 
-.menu > .navbar {
-  background-color: $background-darkest;
-}
-
 .banner {
   .title {
     position: absolute;
@@ -16,7 +12,7 @@
     color: #ffffff;
     top: 200px;
     text-align: center;
-    z-index: 101;
+    z-index: 10;
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);

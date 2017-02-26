@@ -8,13 +8,23 @@
 
 .template-homepage {
 
-  header.banner {
-    height: 80vh;
-    min-height: 500px;
-    max-height: 700px;
-    position: relative;
-    background-color: rgba(70, 70, 70, 0.3);
+  .menu> .navbar {
+    background-color: transparent;
+  }
 
+  header.banner {
+
+    &:after {
+      content: '';
+      background: url("../../fantasy/static/images/new-zealand.jpg") 50% 50% no-repeat;
+      background-size: cover;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
 
     #search-container {
       padding-top: 130px;
@@ -84,18 +94,6 @@
           }
         }
       }
-    }
-
-    &:after {
-      content: '';
-      background: url("../../fantasy/static/images/new-zealand.jpg") 50% 50% no-repeat;
-      background-size: cover;
-      z-index: -1;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
     }
   }
 
