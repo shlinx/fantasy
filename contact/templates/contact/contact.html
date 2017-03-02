@@ -6,9 +6,49 @@
     {% render_bundle 'contact' 'css' %}
 {% endblock extra_css %}
 
+{% block body_class %}template-contactpage{% endblock body_class %}
+
 {% block content %}
     <header class="banner">
 
     </header>
-    Contact Us
+    <div class="container">
+        <div class="col-md-offset-3 col-md-6">
+            <h1 class="col-sm-offset-3 col-sm-9 text-center">联系我们</h1>
+        </div>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <form action="{% url 'contact:submit' %}"
+              method="post"
+              class="col-md-offset-3 col-md-6 form-horizontal">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-3 text-left">Email</label>
+                <div class="col-sm-9">
+                    <input type="email" id="email" name="email" required class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label col-sm-3 text-left">姓名</label>
+                <div class="col-sm-9">
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="subject" class="control-label col-sm-3 text-left">标题</label>
+                <div class="col-sm-9">
+                    <input type="text" id="subject" name="subject" required class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="message" class="control-label col-sm-3 text-left">内容</label>
+                <div class="col-sm-9">
+                    <textarea id="message" name="message" class="form-control" rows="7"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </form>
+    </div>
+
 {% endblock content %}

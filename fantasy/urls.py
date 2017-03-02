@@ -6,7 +6,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 
 from search import views as search_views
-from contact import views as contact_views
+from contact import urls as contact_urls
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -21,8 +21,8 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     url(r'^listings/', include('listings.urls')),
+    url(r'^contact/', include('contact.urls')),
     url(r'^s/$', search_views.search, name='search'),
-    url(r'^contact/$', contact_views.contact, name='contact'),
     url(r'', include(wagtail_urls)),
 )
 

@@ -1,5 +1,10 @@
 from django.shortcuts import render
 
 
-def contact(request):
+def index(request):
     return render(request, 'contact/contact.html')
+
+
+def submit(request):
+
+    pass

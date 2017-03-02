@@ -2,3 +2,24 @@
 @import "common";
 @import "header";
 @import "footer";
+
+.template-contactpage {
+  header.banner {
+
+    &:after {
+      content: '';
+      background: url("../../fantasy/static/images/new-zealand-1805933.jpg") 50% 50% no-repeat;
+      background-size: cover;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  form {
+    margin-bottom: 50px;
+  }
+}
