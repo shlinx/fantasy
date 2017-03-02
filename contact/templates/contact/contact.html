@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load render_bundle from webpack_loader %}
+
+{% block extra_css %}
+    {% render_bundle 'contact' 'css' %}
+{% endblock extra_css %}
+
+{% block content %}
+    <header class="banner">
+
+    </header>
+    Contact Us
+{% endblock content %}

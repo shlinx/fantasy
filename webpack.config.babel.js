@@ -18,6 +18,7 @@ const config = {
         ],
         listing: path.join(__dirname, 'assets/js/listing'),
         search: path.join(__dirname, 'assets/js/search'),
+        contact: path.join(__dirname, 'assets/js/contact'),
     },
     output: {
         path: path.join(__dirname, 'dist'),

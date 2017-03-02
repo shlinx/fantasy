@@ -30,6 +30,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'home',
     'search',
+    'contact',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'webpack_loader',
     'sorl.thumbnail',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
