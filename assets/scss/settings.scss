@@ -11,4 +11,7 @@ $background-lightest: rgba(255, 255, 255, 0.9);
 $border-dark: rgb(70, 70, 70);
 $border-grey: rgb(200, 200, 200);
 $border-light: rgb(255, 255, 255);
+$color-success: #3c763d;
+$color-warning: #9f6000;
+$color-error: #ff0033;
 @import "~breakpoint-sass/stylesheets/breakpoint";

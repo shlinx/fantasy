@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -6,5 +6,9 @@ def index(request):
 
 
 def submit(request):
-
-    pass
+    data = request.POST
+    print(data)
+    return render(request, 'contact/contact.html', {
+        'message': '我们已经收到您的消息，感谢与我们联系。',
+        'message_type': 'good'
+    })
