@@ -5,6 +5,7 @@
 
 .template-contactpage {
   header.banner {
+    height: 60vh;
 
     &:after {
       content: '';
@@ -19,28 +20,35 @@
     }
   }
 
-  p {
-
-    .message {
-      padding: 15px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      display: block;
-
-      &.good {
-        color: $color-success;
-        border: 1px solid $color-success;
+  p.message-container {
+      .message {
+        padding: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: block;
         border-radius: 5px;
-      }
 
-      &.bad {
-        color: $color-error;
-        border: 1px solid $color-error;
+        &.good {
+          color: $color-success;
+          border: 1px solid $color-success;
+        }
+
+        &.bad {
+          color: $color-error;
+          border: 1px solid $color-error;
+        }
       }
+    }
+
+  form {
+    .errorlist {
+      color: $color-error;
     }
   }
 
-  form {
+  .contact-form {
     margin-bottom: 50px;
+    overflow: auto;
+    min-height: 300px;
   }
 }

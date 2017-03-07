@@ -14,7 +14,7 @@ class ContactForm(forms.Form):
 
     def as_div(self):
         return self._html_output(
-            normal_row='<div class="form-group %(html_class_attr)s">%(label)s %(field)s%(help_text)s</div>',
+            normal_row='<div%(html_class_attr)s>%(label)s %(field)s%(help_text)s</div>',
             error_row='%s',
             row_ender='</div>',
             help_text_html=' <span class="helptext">%s</span>',
@@ -51,17 +51,18 @@ class ContactForm(forms.Form):
                     label = bf.label_tag(label) or ''
                 else:
                     label = ''
-
+                if bf.field.show_hidden_initial:
+                    bf_html = bf.as_widget(attrs={'class': 'form-control'}) + bf.as_hidden(only_initial=True)
+                else:
+                    bf_html = bf.as_widget(attrs={'class': 'form-control'})
                 if field.help_text:
                     help_text = help_text_html % force_text(field.help_text)
                 else:
                     help_text = ''
-                print(bf.__class__)
-                print(six.text_type(bf))
                 output.append(normal_row % {
                     'errors': force_text(bf_errors),
                     'label': force_text(label),
-                    'field': six.text_type(bf),
+                    'field': six.text_type(bf_html),
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,

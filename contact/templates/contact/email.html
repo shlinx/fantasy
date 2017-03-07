@@ -8,6 +8,6 @@
     <h3>{{ subject }}</h3>
     <p>Name: {{ name }}</p>
     <p>Email: {{ email }}</p>
-    <p>Message: {{ message }}</p>
+    <p>Message: {{ message|safe|striptags }}</p>
 </body>
 </html>

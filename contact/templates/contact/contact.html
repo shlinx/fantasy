@@ -13,25 +13,27 @@
 
     </header>
     <div class="container">
-        <div>
+        <div class="contact-form">
             <h1 class="text-center">联系我们</h1>
-        </div>
-        {% if message %}
-            <p class="text-center col-sm-offset-3 col-sm-6">
-                <strong class="{{ message_type }} message">{{ message }}</strong>
-            </p>
-        {% endif %}
-        <form action="{% url 'contact:index' %}"
-              method="post"
-              class="col-sm-offset-3 col-sm-6 form-horizontal">
-            {% csrf_token %}
-            {{ form.as_div }}
-            {% if form %}
-                <button type="submit" class="btn btn-primary center-block">提交</button>
-            {% else %}
-                <a href="{% url 'contact:index' %}" class="btn btn-primary center-block">返回</a>
+            {% if message %}
+                <p class="message-container text-center col-sm-offset-3 col-sm-6">
+                    <strong class="{{ message_type }} message">{{ message }}</strong>
+                </p>
             {% endif %}
-        </form>
+            {% if form %}
+                <form action="{% url 'contact:index' %}"
+                      method="post"
+                      class="col-sm-offset-3 col-sm-6 form-horizontal">
+                    {% csrf_token %}
+                    {{ form.as_div }}
+                    <button type="submit" class="btn btn-primary center-block">提交</button>
+                </form>
+            {% else %}
+                <div class="col-sm-offset-3 col-sm-6 text-center">
+                    <a href="{% url 'contact:index' %}" class="btn btn-success">返回</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
 {% endblock content %}
