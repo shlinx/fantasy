@@ -7,12 +7,19 @@ from django.utils.translation import ugettext as _
 
 
 class ContactForm(forms.Form):
+    """
+    The contact form
+    """
     email = forms.EmailField(label='Email', max_length=100, required=True)
     name = forms.CharField(label='姓名', max_length=100, required=True)
     subject = forms.CharField(label='标题', max_length=500, required=True)
     message = forms.CharField(widget=forms.Textarea, label='内容', required=False)
 
     def as_div(self):
+        """
+        Wrap all fields with div
+        :return:
+        """
         return self._html_output(
             normal_row='<div%(html_class_attr)s>%(label)s %(field)s%(help_text)s</div>',
             error_row='%s',

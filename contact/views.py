@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.utils import timezone
 
 from .forms import ContactForm
+from .models import ContactRecord
 
 
 def index(request):
@@ -31,14 +33,24 @@ def index(request):
             })
     else:
         form = ContactForm()
-        return render(request, 'contact/contact.html', {'form': form})
+        return render(request, 'contact/contact.html', {'form': form, 'message': None, 'message_type': None})
 
 
 def submit(data):
+    """
+    Save it to record and send email.
+    :param data:
+    :return:
+    """
     email = data.get('email')
     subject = data.get('subject')
     message = data.get('message')
     name = data.get('name')
+
+    record = ContactRecord(**data)
+    record.created = timezone.now()
+    record.save()
+
     text_content = 'Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n'\
         .format(name=name, email=email, subject=subject, message=message)
     template = get_template('contact/email.html')
