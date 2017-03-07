@@ -21,35 +21,16 @@
                 <strong class="{{ message_type }} message">{{ message }}</strong>
             </p>
         {% endif %}
-        <form action="{% url 'contact:submit' %}"
+        <form action="{% url 'contact:index' %}"
               method="post"
               class="col-sm-offset-3 col-sm-6 form-horizontal">
-{#            {% csrf_token %}#}
-            <div class="form-group">
-                <label for="email">Email</label>
-                <div>
-                    <input type="email" id="email" name="email" required class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name">姓名</label>
-                <div>
-                    <input type="text" id="name" name="name" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="subject">标题</label>
-                <div>
-                    <input type="text" id="subject" name="subject" required class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="message">内容</label>
-                <div>
-                    <textarea id="message" name="message" class="form-control" rows="7"></textarea>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary center-block">提交</button>
+            {% csrf_token %}
+            {{ form.as_div }}
+            {% if form %}
+                <button type="submit" class="btn btn-primary center-block">提交</button>
+            {% else %}
+                <a href="{% url 'contact:index' %}" class="btn btn-primary center-block">返回</a>
+            {% endif %}
         </form>
     </div>
 
