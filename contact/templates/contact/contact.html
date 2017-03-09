@@ -17,7 +17,7 @@
             <h1 class="text-center">联系我们</h1>
             {% if message %}
                 <p class="message-container text-center col-sm-offset-3 col-sm-6">
-                    <strong class="{{ message_type }} message">{{ message }}</strong>
+                    <strong class="{{ message.type }} message">{{ message.text }}</strong>
                 </p>
             {% endif %}
             {% if form %}
