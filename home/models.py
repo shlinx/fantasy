@@ -6,4 +6,4 @@ from listings.models import TNZListing
 
 
 class HomePage(Page):
-    listings = TNZListing.objects.all()[:12]
+    listings = TNZListing.objects.all().order_by('?')[:12]
