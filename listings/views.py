@@ -1,5 +1,4 @@
 from django.views import generic
-from django.http import HttpResponse
 from django.core import serializers
 
 from .models import TNZRegion
@@ -31,22 +30,55 @@ class ListingDetailView(generic.DetailView):
 
 class ListingsFilter:
     """
-    The api class to feed listings
+    Listings filter to feed listings based on filters
     """
-    def __init__(self, filters):
+    def __init__(self, filters=None):
+        self.length = 12
         self.filters = filters
         self.listings = TNZListing.objects.all()
+        self.filter_listings()
+        self.sort_listings()
+        self.limit_listings()
 
-    def filter_listings(self, request):
-        types = request.GET.get('types')
-        if len(types) > 0:
-            self.filter_by_types(types)
+    def filter_listings(self):
+        """
+        Filter listings by criteria from filters.
+        :return:
+        """
+        self.filter_by_types()
+        self.filter_by_regions()
 
-    def filter_by_types(self, types):
-        pass
+    def filter_by_types(self):
+        """
+        Filter by business types
+        :return:
+        """
+        self.listings = self.listings
 
-    def get_listings(self):
-        return self.listings
+    def filter_by_regions(self):
+        """
+        Filter by regions.
+        :return:
+        """
+        self.listings = self.listings
+
+    def sort_listings(self):
+        """
+        Sort listings.
+        :return:
+        """
+        self.listings = self.listings
+
+    def limit_listings(self):
+        """
+        Limit listings.
+        :return:
+        """
+        self.listings = self.listings[: self.length]
 
     def json(self):
+        """
+        Serialize the listings result as json format.
+        :return:
+        """
         return serializers.serialize('json', self.listings)
