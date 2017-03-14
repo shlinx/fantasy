@@ -1,4 +1,6 @@
 from django.views import generic
+from django.http import HttpResponse
+from django.core import serializers
 
 from .models import TNZRegion
 from .models import TNZListing
@@ -26,3 +28,25 @@ class ListingDetailView(generic.DetailView):
 
         return context
 
+
+class ListingsFilter:
+    """
+    The api class to feed listings
+    """
+    def __init__(self, filters):
+        self.filters = filters
+        self.listings = TNZListing.objects.all()
+
+    def filter_listings(self, request):
+        types = request.GET.get('types')
+        if len(types) > 0:
+            self.filter_by_types(types)
+
+    def filter_by_types(self, types):
+        pass
+
+    def get_listings(self):
+        return self.listings
+
+    def json(self):
+        return serializers.serialize('json', self.listings)
