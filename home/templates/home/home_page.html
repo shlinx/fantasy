@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load render_bundle from webpack_loader %}
+{% load wagtailroutablepage_tags %}
 
 {% block extra_css %}
     {% render_bundle 'home' 'css' %}
@@ -20,13 +21,15 @@
                 </ul>
                 <div class="resp-tabs-container">
                     <div>
-                        <form>
+                        <form method="post" action="{% routablepageurl page 'search' %}">
+                            {% csrf_token %}
                             <input type="text" placeholder="海格立公园，天空塔">
                             <input type="submit" value="搜索">
                         </form>
                     </div>
                     <div>
-                        <form>
+                        <form method="post" action="{% routablepageurl page 'filter' %}">
+                            {% csrf_token %}
                             <select>
                                 {% for region in page.regions %}
                                     <option value="{{ region.regionname }}">{{ region.label }}</option>

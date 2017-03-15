@@ -1,16 +1,32 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db.models import Count
+from django.http import HttpResponse
 from wagtail.wagtailcore.models import Page
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 
 from listings.models import TNZListing
 
 
-class HomePage(Page):
-    listings = TNZListing.objects.order_by('?')[:12]
+class HomePage(RoutablePageMixin, Page):
+    listings = TNZListing.objects.all()[:12]
+
+    @route(r'^search/$', name='search')
+    def search(self, request):
+        print(request.POST)
+        return HttpResponse(request.POST)
+
+    @route(r'^filter/$', name='filter')
+    def filter(self, request):
+        print(request.POST)
+        return HttpResponse(request.POST)
 
     @staticmethod
     def regions():
+        """
+        Get regions data.
+        :return:
+        """
         regions_data = []
         region_map = {
             '': '其他',
@@ -31,6 +47,10 @@ class HomePage(Page):
 
     @staticmethod
     def business_types():
+        """
+        Get business types data.
+        :return:
+        """
         business_types_data = []
         business_types_map = {
             'Accommodation': '住宿',
@@ -56,3 +76,4 @@ class HomePage(Page):
                 'label': value
             })
         return business_types_data
+
