@@ -23,21 +23,21 @@
                     <div>
                         <form method="post" action="{% routablepageurl page 'search' %}">
                             {% csrf_token %}
-                            <input type="text" placeholder="海格立公园，天空塔">
+                            <input type="text" name="keyword" placeholder="海格立公园，天空塔">
                             <input type="submit" value="搜索">
                         </form>
                     </div>
                     <div>
                         <form method="post" action="{% routablepageurl page 'filter' %}">
                             {% csrf_token %}
-                            <select>
+                            <select name="regions">
                                 {% for region in page.regions %}
                                     <option value="{{ region.regionname }}">{{ region.label }}</option>
                                 {% endfor %}
                             </select>
-                            <select>
-                                {% for business_type in page.business_types %}
-                                    <option value="{{ business_type.value }}">{{ business_type.label }}</option>
+                            <select name="types">
+                                {% for type in page.types %}
+                                    <option value="{{ type.value }}">{{ type.label }}</option>
                                 {% endfor %}
                             </select>
                             <input type="submit" value="看看">

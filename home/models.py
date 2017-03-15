@@ -1,7 +1,8 @@
 from __future__ import absolute_import, unicode_literals
-
+from urllib.parse import urlencode
 from django.db.models import Count
-from django.http import HttpResponse
+from django.urls import reverse
+from django.shortcuts import redirect
 from wagtail.wagtailcore.models import Page
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 
@@ -13,13 +14,40 @@ class HomePage(RoutablePageMixin, Page):
 
     @route(r'^search/$', name='search')
     def search(self, request):
-        print(request.POST)
-        return HttpResponse(request.POST)
+        """
+        Request handler for searching keyword.
+        :param request:
+        :return:
+        """
+        query = ''
+        keyword = request.POST.get('keyword')
+        if keyword:
+            query = '?' + urlencode({
+                'keyword': keyword
+            })
+
+        return redirect(reverse('search') + query)
 
     @route(r'^filter/$', name='filter')
     def filter(self, request):
-        print(request.POST)
-        return HttpResponse(request.POST)
+        """
+        Request handler for filtering by region and type.
+        :param request:
+        :return:
+        """
+        query = ''
+        query_data = {}
+        has_query = False
+        for key in ('regions', 'types'):
+            value = request.POST.get(key)
+            if value:
+                query_data[key] = value
+                has_query = True
+
+        if has_query:
+            query = '?' + urlencode(query_data)
+
+        return redirect(reverse('search') + query)
 
     @staticmethod
     def regions():
@@ -46,13 +74,13 @@ class HomePage(RoutablePageMixin, Page):
         return regions_data
 
     @staticmethod
-    def business_types():
+    def types():
         """
         Get business types data.
         :return:
         """
-        business_types_data = []
-        business_types_map = {
+        types_data = []
+        types_map = {
             'Accommodation': '住宿',
             'Activities and Tours': '观光活动',
             'Transport': '交通',
@@ -65,15 +93,15 @@ class HomePage(RoutablePageMixin, Page):
         }
         for business_type in TNZListing.objects.values('business_type').annotate(count=Count('id')).order_by('-count'):
             value = business_type['business_type']
-            if value in business_types_map:
-                business_types_data.append({
+            if value in types_map:
+                types_data.append({
                     'value': value,
-                    'label': business_types_map[value]
+                    'label': types_map[value]
                 })
                 continue
-            business_types_data.append({
+            types_data.append({
                 'value': value,
                 'label': value
             })
-        return business_types_data
+        return types_data
 
