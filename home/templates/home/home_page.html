@@ -28,14 +28,14 @@
                     <div>
                         <form>
                             <select>
-                                <option>奥克兰</option>
-                                <option>基督城</option>
-                                <option>皇后镇</option>
+                                {% for region in page.regions %}
+                                    <option value="{{ region.regionname }}">{{ region.label }}</option>
+                                {% endfor %}
                             </select>
                             <select>
-                                <option>购物</option>
-                                <option>极限运动</option>
-                                <option>旅游观光</option>
+                                {% for business_type in page.business_types %}
+                                    <option value="{{ business_type.value }}">{{ business_type.label }}</option>
+                                {% endfor %}
                             </select>
                             <input type="submit" value="看看">
                         </form>
