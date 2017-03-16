@@ -5,7 +5,7 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    url(r'^listings/$', views.listings, name='listings'),
-    url(r'^regions/$', views.regions, name='regions'),
-    url(r'^types/$', views.types, name='types'),
+    url(r'^l/$', views.listings, name='listings'),
+    url(r'^r/$', views.regions, name='regions'),
+    url(r'^t/$', views.types, name='types'),
 ]

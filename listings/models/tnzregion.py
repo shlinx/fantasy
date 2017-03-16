@@ -16,5 +16,5 @@ class TNZRegion(models.Model):
         return self.label
 
     def listings(self):
-        all_listings = TNZListing.objects.filter(market='cn')
-        return [listing for listing in all_listings if listing.regionname == self.label]
+        all_listings = TNZListing.objects.filter(market='cn', regionname=self.label)
+        return all_listings

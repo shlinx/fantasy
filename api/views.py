@@ -14,19 +14,10 @@ def listings(request):
     :param request:
     :return:
     """
-    body = ListingsFilter(sanitize_filters(request.GET)).json()
+    body = ListingsFilter(request.GET).json()
     response = HttpResponse(body)
     response.__setitem__('Content-Type', 'application/json')
     return response
-
-
-def sanitize_filters(raw_filters):
-    """
-    Sanitize filters from raw filters data.
-    :param raw_filters:
-    :return:
-    """
-    return raw_filters
 
 
 def regions(request):

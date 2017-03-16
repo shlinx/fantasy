@@ -34,11 +34,45 @@ class ListingsFilter:
     """
     def __init__(self, filters=None):
         self.length = 12
-        self.filters = filters
+        self.filters = self.sanitize_filters(filters)
         self.listings = TNZListing.objects.all()
         self.filter_listings()
         self.sort_listings()
         self.limit_listings()
+
+    @staticmethod
+    def sanitize_filters(raw_filters):
+        """
+        Sanitize filters from raw filters data.
+        :param raw_filters:
+        :return:
+        """
+        effective_filters = {}
+        if not isinstance(raw_filters, dict):
+            return effective_filters
+
+        # Sanitize keyword
+        if 'k' in raw_filters and isinstance(raw_filters['k'], str):
+            effective_filters['keyword'] = raw_filters['k']
+
+        # Function to filter data that can be list
+        def sanitize_list_filter(data):
+            if isinstance(data, str):
+                return [data]
+            elif isinstance(data, list) and len(data) > 0:
+                effective_data = []
+                for item in data:
+                    if isinstance(item, str):
+                        effective_data.append(item)
+                return effective_data
+        # Sanitize regions
+        if 'r' in raw_filters:
+            effective_filters['regions'] = sanitize_list_filter(raw_filters['r'])
+        # Sanitize types
+        if 't' in raw_filters:
+            effective_filters['types'] = sanitize_list_filter(raw_filters['t'])
+
+        return effective_filters
 
     def filter_listings(self):
         """
