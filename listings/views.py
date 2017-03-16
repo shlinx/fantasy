@@ -33,7 +33,6 @@ class ListingsFilter:
     Listings filter to feed listings based on filters
     """
     def __init__(self, filters=None):
-        self.length = 12
         self.filters = self.sanitize_filters(filters)
         self.listings = TNZListing.objects.all()
         self.filter_listings()
@@ -71,6 +70,11 @@ class ListingsFilter:
         # Sanitize types
         if 't' in raw_filters:
             effective_filters['types'] = sanitize_list_filter(raw_filters['t'])
+        # Sanitize start
+        if 's' in raw_filters:
+            start = raw_filters['s']
+            if isinstance(start, int) or (isinstance(start, str) and start.isdigit()):
+                effective_filters['start'] = int(start)
 
         return effective_filters
 
@@ -79,22 +83,12 @@ class ListingsFilter:
         Filter listings by criteria from filters.
         :return:
         """
-        self.filter_by_types()
-        self.filter_by_regions()
-
-    def filter_by_types(self):
-        """
-        Filter by business types
-        :return:
-        """
-        self.listings = self.listings
-
-    def filter_by_regions(self):
-        """
-        Filter by regions.
-        :return:
-        """
-        self.listings = self.listings
+        if 'keyword' in self.filters:
+            self.listings = self.listings.filter(name__contains=self.filters['keyword'])
+        if 'types' in self.filters:
+            self.listings = self.listings.filter(business_type__in=self.filters['types'])
+        if 'regions' in self.filters:
+            self.listings = self.listings.filter(regionname__in=self.filters['regions'])
 
     def sort_listings(self):
         """
@@ -103,12 +97,14 @@ class ListingsFilter:
         """
         self.listings = self.listings
 
-    def limit_listings(self):
+    def limit_listings(self, start=0, length=12):
         """
         Limit listings.
         :return:
         """
-        self.listings = self.listings[: self.length]
+        if 'start' in self.filters:
+            start = self.filters['start']
+        self.listings = self.listings[start: length]
 
     def json(self):
         """
