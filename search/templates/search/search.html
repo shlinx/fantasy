@@ -15,34 +15,10 @@
     <header class="banner">
 
     </header>
-    <h1>Search</h1>
-
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        <input type="submit" value="Search" class="button">
-    </form>
-
-    {% if search_results %}
-        <ul>
-            {% for listing in search_results %}
-                <li>
-                    {% include 'search/listing.html' %}
-                </li>
-            {% endfor %}
-        </ul>
-
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
-    {% elif search_query %}
-        No results found
-    {% endif %}
+    {% include 'search/app.html' %}
 {% endblock %}
 
 {% block extra_js %}
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
     {% render_bundle 'search' 'js' %}
 {% endblock extra_js %}
