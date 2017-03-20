@@ -8,7 +8,6 @@ import '../../scss/search.scss'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {browserHistory, Router, Route, Link} from 'react-router';
-console.log(browserHistory);
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
