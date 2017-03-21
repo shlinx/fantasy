@@ -19,7 +19,8 @@ const store = createStore(
     combineReducers({
         ...reducers,
         routing: routerReducer
-    })
+    }),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const history = syncHistoryWithStore(browserHistory, store);

@@ -3,18 +3,19 @@
  */
 'use strict';
 
-import {SET_LISTINGS} from '../actions'
+import {
+    SET_LISTINGS,
+    SWITCH_LOADING_LISTINGS,
+} from '../actions/index';
 
-const listings = (state = [], action) => {
-    switch(action.type) {
-        case SET_LISTINGS:
-            return action.listings;
-        default:
-            return state;
-    }
-};
+const isLoadingListings = (state = false, action) => (
+    action.type === SWITCH_LOADING_LISTINGS ? action.isLoadingListings : state
+);
+
+const listings = (state = [], action) => (action.type === SET_LISTINGS ? action.listings : state);
 
 const reducers = {
+    isLoadingListings,
     listings,
 };
 
