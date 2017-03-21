@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 class Card extends React.Component {
     constructor(props) {
@@ -12,8 +12,25 @@ class Card extends React.Component {
     }
 
     render() {
+        let listing = this.props.listing;
         return (
-            <div>Card</div>
+            <div>
+                <a
+                    href=""
+                    className="grid-item-container"
+                    style={{backgroundImage: `url('${listing.fields.main_image}')`}}
+                >
+                    <header>
+                        <h4>{listing.fields.name}</h4>
+                    </header>
+                    <div className="summary">
+                        <p>
+                            {listing.fields.listing_summary}
+                        </p>
+                    </div>
+                </a>
+
+            </div>
         );
     }
 }

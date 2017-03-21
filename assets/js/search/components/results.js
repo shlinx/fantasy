@@ -16,22 +16,16 @@ class Results extends React.Component {
     render() {
         return (
             <div>
-                Here are the results!
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
+                {
+                    this.props.listings.map((listing) => (
+                        <Card listing={listing} key={listing.pk}/>
+                    ))
+                }
             </div>
         );
     }
 }
 
-export default Results;
+export default connect((state) => ({
+    listings: state.listings
+}))(Results);
