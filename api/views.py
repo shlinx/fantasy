@@ -1,23 +1,16 @@
 import json
 
 from django.http import HttpResponse
-from django.core.serializers import serialize
 from django.db.models import Count
+from rest_framework import viewsets
 
-from listings.views import ListingsFilter
 from listings.models import TNZListing
+from .serializers import ListingSerializer
 
 
-def listings(request):
-    """
-    The listings api json feed.
-    :param request:
-    :return:
-    """
-    body = ListingsFilter(request.GET).json()
-    response = HttpResponse(body)
-    response.__setitem__('Content-Type', 'application/json')
-    return response
+class ListingViewSet(viewsets.ModelViewSet):
+    queryset = TNZListing.objects.all()
+    serializer_class = ListingSerializer
 
 
 def regions(request):

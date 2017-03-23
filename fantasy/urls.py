@@ -16,12 +16,12 @@ urlpatterns = [
     # url(r'^django-admin/', include(admin.site.urls)),
 
     url(r'^shlinx/', include(wagtailadmin_urls)),
+    url(r'^api/', include('api.urls')),
     url(r'^documents/', include(wagtaildocs_urls)),
 ]
 
 urlpatterns += i18n_patterns(
     url(r'^listings/', include('listings.urls')),
-    url(r'^api/', include('api.urls')),
     url(r'^contact/', include('contact.urls')),
     url(r'^s/$', search_views.search, name='search'),
     url(r'', include(wagtail_urls)),

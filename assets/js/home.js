@@ -46,7 +46,7 @@ function distMetric(x,y,x2,y2) {
     return (xDiff * xDiff) + (yDiff * yDiff);
 }
 
-const transitionTime = '.7s';
+const transitionTime = '.5s';
 
 $('.grid-item').hover(function(e) {
         let el_pos = $(this).offset(),

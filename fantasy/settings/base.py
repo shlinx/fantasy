@@ -168,6 +168,17 @@ WEBPACK_LOADER = {
     }
 }
 
+# REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAdminUser',
+    ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'PAGE_SIZE': 12
+}
+
 # For Travis-CI
 if 'TRAVIS' in os.environ:
     DATABASES = {
