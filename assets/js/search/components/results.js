@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import Card from './card';
 
@@ -17,9 +17,17 @@ class Results extends React.Component {
         return (
             <div>
                 {
-                    this.props.listings.map((listing) => (
-                        <Card listing={listing} key={listing.unique_id}/>
-                    ))
+                    (() => {
+                        if (this.props.listings.length) {
+                            return this.props.listings.map((listing) => (
+                                <Card listing={listing} key={listing.unique_id}/>
+                            ))
+                        } else {
+                            return (
+                                <h4>呀，还没有符合条件的信息。您可以试一试改变搜索条件。</h4>
+                            )
+                        }
+                    })()
                 }
             </div>
         );

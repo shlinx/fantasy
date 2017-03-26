@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import Filters from './filters';
 import Results from './results';
@@ -47,9 +47,17 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Filters/>
-                <Results/>
-                <Map/>
+                <div className="col-sm-12">
+                    <Filters location={this.props.location}/>
+                </div>
+                <div className="col-sm-12">
+                    <div className="col-md-6">
+                        <Results location={this.props.location}/>
+                    </div>
+                    <div className="col-md-4">
+                        <Map location={this.props.location}/>
+                    </div>
+                </div>
             </div>
         );
     }
