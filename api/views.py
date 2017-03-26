@@ -17,7 +17,7 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListingSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_fields = ('regionname', 'business_type')
-    search_fields = ('name', 'listing_summary', 'regionname', 'business_type')
+    search_fields = ('name', 'regionname', 'business_type')
     ordering_fields = ('name', 'regionname'),
     ordering = ('name',)
 

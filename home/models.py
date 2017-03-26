@@ -19,10 +19,10 @@ class HomePage(RoutablePageMixin, Page):
         :return:
         """
         query = ''
-        keyword = request.POST.get('keyword')
-        if keyword:
+        keywords = request.POST.get('keywords')
+        if keywords:
             query = '?' + urlencode({
-                'k': keyword
+                'search': keywords
             })
 
         return redirect(reverse('search') + query)
@@ -37,7 +37,7 @@ class HomePage(RoutablePageMixin, Page):
         query = ''
         query_data = {}
         has_query = False
-        for key, query_key in {'regions': 'r', 'types': 't'}.items():
+        for key, query_key in {'regions': 'regionname', 'types': 'business_type'}.items():
             value = request.POST.get(key)
             if value:
                 query_data[query_key] = value

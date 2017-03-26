@@ -4,6 +4,9 @@ from listings.models import TNZListing, TNZImage
 
 
 class TNZImageField(serializers.RelatedField):
+    """
+    Get resized image information.
+    """
     def to_representation(self, value):
         if isinstance(value, TNZImage):
             return {
@@ -19,6 +22,9 @@ class TNZImageField(serializers.RelatedField):
 
 
 class ListingSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    The Listing serializer.
+    """
     main_image = TNZImageField(many=False, read_only=True)
     logo_image = TNZImageField(many=False, read_only=True)
     # gallery_images = TNZImageSerializer(many=True, read_only=True)
