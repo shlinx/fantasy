@@ -3,15 +3,24 @@ from rest_framework import serializers
 from listings.models import TNZListing, TNZImage
 
 
-class TNZImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TNZImage
-        fields = ('description', 'label', 'caption', 'file')
+class TNZImageField(serializers.RelatedField):
+    def to_representation(self, value):
+        if isinstance(value, TNZImage):
+            return {
+                'description': value.description,
+                'label': value.label,
+                'small': value.get_thumbnail('250x300').url,
+                'large': value.get_thumbnail('1280x500').url
+            }
+        return None
+
+    def to_internal_value(self, data):
+        return self.to_representation()
 
 
 class ListingSerializer(serializers.HyperlinkedModelSerializer):
-    main_image = TNZImageSerializer(many=False, read_only=True)
-    logo_image = TNZImageSerializer(many=False, read_only=True)
+    main_image = TNZImageField(many=False, read_only=True)
+    logo_image = TNZImageField(many=False, read_only=True)
     # gallery_images = TNZImageSerializer(many=True, read_only=True)
 
     class Meta:

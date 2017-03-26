@@ -18,7 +18,7 @@ class Card extends React.Component {
                 <a
                     href=""
                     className="grid-item-container"
-                    style={{backgroundImage: `url('${listing.main_image.file}')`}}
+                    style={{backgroundImage: `url('${listing.main_image ? listing.main_image.small : ''}')`}}
                 >
                     <header>
                         <h4>{listing.name}</h4>

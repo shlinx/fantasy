@@ -1,4 +1,5 @@
 from django.db import models
+from sorl.thumbnail import get_thumbnail
 
 
 class TNZImage(models.Model):
@@ -29,6 +30,19 @@ class TNZImage(models.Model):
         related_name='gallery_images',
         null=True
     )
+
+    def get_thumbnail(self, size='100x100', crop='center', quality=99):
+        """
+        Get the thumbnail of the image.
+        :param size: 
+        :param crop: 
+        :param quality: 
+        :return: 
+        """
+        if self.file:
+            return get_thumbnail(self.file, size, crop=crop, quality=quality)
+        return None
+
 
 
 
