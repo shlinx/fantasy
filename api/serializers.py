@@ -8,7 +8,7 @@ class TNZImageField(serializers.RelatedField):
     Get resized image information.
     """
     def to_representation(self, value):
-        if isinstance(value, TNZImage):
+        if isinstance(value, TNZImage) and value.file:
             return {
                 'description': value.description,
                 'label': value.label,
