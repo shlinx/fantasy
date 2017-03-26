@@ -2,14 +2,14 @@ import json
 
 from django.http import HttpResponse
 from django.db.models import Count
-from rest_framework import viewsets, generics, filters
+from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from listings.models import TNZListing
 from .serializers import ListingSerializer
 
 
-class ListingViewSet(viewsets.ModelViewSet):
+class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     """
     The list of listings which is filtered by different criteria.
     """

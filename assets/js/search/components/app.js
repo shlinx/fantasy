@@ -12,6 +12,8 @@ import Map from './map';
 import {
     switchLoadingListings,
     setListings,
+    setPrevListingsUrl,
+    setNextListingsUrl,
 } from '../actions/index';
 
 class App extends React.Component {
@@ -34,8 +36,10 @@ class App extends React.Component {
             dataType: 'json',
             beforeSend: () => this.props.dispatch(switchLoadingListings(true)),
             success: (data) => {
-                this.props.dispatch(setListings(data));
+                this.props.dispatch(setListings(data.results));
                 this.props.dispatch(switchLoadingListings(false));
+                this.props.dispatch(setPrevListingsUrl(data.previous));
+                this.props.dispatch(setNextListingsUrl(data.next));
             }
         });
     }

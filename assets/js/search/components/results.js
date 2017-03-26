@@ -18,7 +18,7 @@ class Results extends React.Component {
             <div>
                 {
                     this.props.listings.map((listing) => (
-                        <Card listing={listing} key={listing.pk}/>
+                        <Card listing={listing} key={listing.unique_id}/>
                     ))
                 }
             </div>

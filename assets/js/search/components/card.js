@@ -18,14 +18,14 @@ class Card extends React.Component {
                 <a
                     href=""
                     className="grid-item-container"
-                    style={{backgroundImage: `url('${listing.fields.main_image}')`}}
+                    style={{backgroundImage: `url('${listing.main_image.file}')`}}
                 >
                     <header>
-                        <h4>{listing.fields.name}</h4>
+                        <h4>{listing.name}</h4>
                     </header>
                     <div className="summary">
                         <p>
-                            {listing.fields.listing_summary}
+                            {listing.listing_summary}
                         </p>
                     </div>
                 </a>
