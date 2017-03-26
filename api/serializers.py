@@ -6,4 +6,13 @@ from listings.models import TNZListing
 class ListingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TNZListing
-        fields = ('name', 'regionname')
+        fields = (
+            'name',
+            'market',
+            'listing_summary',
+            'listing_description',
+            'regionname',
+            'business_type',
+            'latitude',
+            'longitude'
+        )
