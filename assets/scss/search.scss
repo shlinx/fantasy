@@ -3,23 +3,54 @@
 @import "header";
 @import "footer";
 
+$header-height: 90px;
+$filter-height: 50px;
+
+html, body {
+  height: 100%;
+}
+
 .template-searchresults {
-  header.banner {
-    &:after {
-      content: '';
-      background: url("../../fantasy/static/images/new-zealand-1738275.jpg") 50% 50% no-repeat;
-      background-size: cover;
-      z-index: -1;
+  #app {
+    position: absolute;
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    #filter-container {
       position: absolute;
-      top: 0;
-      right: 0;
+      height: $filter-height;
+    }
+
+    #results-container {
+      position: absolute;
+      top: $filter-height;
       bottom: 0;
       left: 0;
+      width: 60%;
+
+      .results-root {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        overflow: auto;
+      }
     }
   }
 
   .map {
-    //Placeholder.
-    height: 500px;
+    position: absolute;
+    top: $filter-height;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+  }
+
+  .main-footer {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
   }
 }

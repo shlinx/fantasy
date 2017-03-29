@@ -47,16 +47,14 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <div className="col-sm-12">
+                <div id="filter-container">
                     <Filters location={this.props.location}/>
                 </div>
-                <div className="col-sm-12">
-                    <div className="col-md-6">
-                        <Results location={this.props.location}/>
-                    </div>
-                    <div className="col-md-4">
-                        <Map location={this.props.location}/>
-                    </div>
+                <div id="results-container">
+                    <Results location={this.props.location}/>
+                </div>
+                <div id="map-container">
+                    <Map location={this.props.location}/>
                 </div>
             </div>
         );
