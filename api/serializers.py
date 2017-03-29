@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from rest_framework import serializers
 
 from listings.models import TNZListing, TNZImage
@@ -18,7 +19,7 @@ class TNZImageField(serializers.RelatedField):
         return None
 
     def to_internal_value(self, data):
-        return self.to_representation()
+        pass
 
 
 class ListingSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,6 +29,11 @@ class ListingSerializer(serializers.HyperlinkedModelSerializer):
     main_image = TNZImageField(many=False, read_only=True)
     logo_image = TNZImageField(many=False, read_only=True)
     # gallery_images = TNZImageSerializer(many=True, read_only=True)
+
+    def to_representation(self, instance):
+        result = super(ListingSerializer, self).to_representation(instance)
+        result['url'] = reverse('listings:listing', args=[instance.pk])
+        return result
 
     class Meta:
         model = TNZListing

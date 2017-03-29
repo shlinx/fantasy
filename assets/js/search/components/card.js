@@ -16,7 +16,7 @@ class Card extends React.Component {
         return (
             <div className="col-sm-12 col-md-6">
                 <a
-                    href=""
+                    href={listing.url}
                     className="grid-item-container"
                     style={{backgroundImage: `url('${listing.main_image ? listing.main_image.small : ''}')`}}
                 >
