@@ -12,7 +12,6 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
         this.map = null;
-        this.markerSize = new google.maps.Size(35, 45);
         this.markers = {};
         this.activeListing = null;
         this.infoWindow = new google.maps.InfoWindow();
@@ -51,9 +50,9 @@ class Map extends React.Component {
     }
 
     renderListingsMarkers() {
-        for (let identifier in this.markers) {
-            if (this.markers.hasOwnProperty(identifier)) {
-                this.markers[identifier].setMap(null);
+        for (let unique_id in this.markers) {
+            if (this.markers.hasOwnProperty(unique_id)) {
+                this.markers[unique_id].setMap(null);
             }
         }
         this.markers = {};
@@ -71,8 +70,8 @@ class Map extends React.Component {
     }
 
     addMarker(listing) {
-        let lat = parseFloat(listing.lat),
-            lng = parseFloat(listing.lng);
+        let lat = parseFloat(listing.latitude),
+            lng = parseFloat(listing.longitude);
 
         if (!lat || !lng) {
             return;
@@ -82,22 +81,19 @@ class Map extends React.Component {
             markerOptions = {
                 map: this.map,
                 animation: google.maps.Animation.DROP,
-                position: lagLng,
-                icon: {
-                    scaledSize: this.markerSize
-                }
+                position: lagLng
             };
         if (listing.hasOwnProperty('icon')) {
             markerOptions.icon.url = listing.icon;
         }
         let marker = new google.maps.Marker(markerOptions);
         marker.addListener('click', () => this.setActiveListing(listing));
-        this.markers[listing.identifier] = marker;
+        this.markers[listing.unique_id] = marker;
     };
 
     openInfoWindow(listing) {
         const infoWindow = this.infoWindow;
-        let marker = this.markers[listing.identifier],
+        let marker = this.markers[listing.unique_id],
             image = listing.image ? listing.image : '',
             content = `
                 <div>${listing.name}</div>
@@ -108,7 +104,7 @@ class Map extends React.Component {
 
     setActiveListing(listing) {
         this.clearActiveListing();
-        let marker = this.markers[listing.identifier];
+        let marker = this.markers[listing.unique_id];
         marker.setAnimation(google.maps.Animation.BOUNCE);
         this.openInfoWindow(listing);
         this.activeListing = listing;
@@ -116,7 +112,7 @@ class Map extends React.Component {
 
     clearActiveListing() {
         if (!this.activeListing) return;
-        let marker = this.markers[this.activeListing.identifier];
+        let marker = this.markers[this.activeListing.unique_id];
         marker.setAnimation(null);
         this.activeListing = null;
         this.infoWindow.close();
