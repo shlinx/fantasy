@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.shortcuts import reverse
 
 from .tnztag import TNZTag
 from .tnzimage import TNZImage
@@ -132,3 +133,6 @@ class TNZListing(models.Model):
                 'label': value
             })
         return types_data
+
+    def url(self):
+        return reverse('listings:listing', args=[self.pk])
