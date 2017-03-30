@@ -30,7 +30,7 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
         response = super(ListingViewSet, self).get_paginated_response(data)
         page = self.paginator.page
         response.data['page'] = page.paginator.validate_number(page.number)
-        print(response.data)
+        response.data['num_pages'] = page.paginator.num_pages
         return response
 
 

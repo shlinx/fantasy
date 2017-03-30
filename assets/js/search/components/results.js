@@ -15,14 +15,15 @@ class Results extends React.Component {
 
     render() {
         return (
-            <div className="results-root">
+            <div>
                 {
                     (() => {
-                        if (this.props.listings.length) {
+                        if(this.props.listings.length) {
                             return this.props.listings.map((listing) => (
                                 <Card listing={listing} key={listing.unique_id}/>
                             ))
-                        } else {
+                        }
+                        if(!this.props.isLoadingListings) {
                             return (
                                 <h4>呀，还没有符合条件的信息。您可以试一试改变搜索条件。</h4>
                             )
@@ -35,5 +36,6 @@ class Results extends React.Component {
 }
 
 export default connect((state) => ({
-    listings: state.listings
+    listings: state.listings,
+    isLoadingListings: state.isLoadingListings
 }))(Results);
