@@ -19,6 +19,26 @@ html, body {
     right: 0;
     overflow: auto;
 
+    .load-icon {
+      position: absolute;
+      display: none;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background-color: $background-grey;
+
+      i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    
+    .loading .load-icon {
+      display: block;
+    }
+
     #filter-container {
       position: absolute;
       height: $filter-height;

@@ -40,7 +40,7 @@ class App extends React.Component {
     componentDidUpdate(prevProps) {
         let shouldLoadListings = false;
         for (let query of EFFECTIVE_QUERIES) {
-            if(prevProps.location.query[query] !== this.props.location.query[query]) {
+            if (prevProps.location.query[query] !== this.props.location.query[query]) {
                 shouldLoadListings = true;
             }
         }
@@ -78,6 +78,9 @@ class App extends React.Component {
                 <div id="results-container">
                     <Results location={this.props.location}/>
                     <Pagination location={this.props.location}/>
+                    <div className="load-icon">
+                        <i className="fa fa-3x fa-spinner fa-pulse" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div id="map-container">
                     <Map location={this.props.location}/>
