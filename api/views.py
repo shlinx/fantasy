@@ -21,6 +21,18 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ('name', 'regionname'),
     ordering = ('name',)
 
+    def get_paginated_response(self, data):
+        """
+        Add page number to the response.
+        :param data: 
+        :return: 
+        """
+        response = super(ListingViewSet, self).get_paginated_response(data)
+        page = self.paginator.page
+        response.data['page'] = page.paginator.validate_number(page.number)
+        print(response.data)
+        return response
+
 
 def regions(request):
     """
