@@ -78,12 +78,12 @@ class App extends React.Component {
                 <div id="results-container">
                     <Results location={this.props.location}/>
                     <Pagination location={this.props.location}/>
-                    <div className="load-icon">
-                        <i className="fa fa-3x fa-spinner fa-pulse" aria-hidden="true"></i>
-                    </div>
                 </div>
                 <div id="map-container">
                     <Map location={this.props.location}/>
+                </div>
+                <div className="load-icon">
+                    <i className="fa fa-3x fa-spinner fa-pulse" aria-hidden="true"></i>
                 </div>
             </div>
         );

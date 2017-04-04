@@ -19,26 +19,6 @@ html, body {
     right: 0;
     overflow: auto;
 
-    .load-icon {
-      position: absolute;
-      display: none;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      background-color: $background-grey;
-
-      i {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-    
-    .loading .load-icon {
-      display: block;
-    }
-
     #filter-container {
       position: absolute;
       height: $filter-height;
@@ -51,6 +31,79 @@ html, body {
       left: 0;
       width: 60%;
       overflow: auto;
+    }
+
+    .cards-container {
+      overflow: auto;
+    }
+
+    .card {
+      height: 300px;
+      overflow: auto;
+      margin-bottom: 30px;
+
+      >a {
+        height: 100%;
+        display: block;
+
+        h4 {
+          padding: 10px 0;
+          margin: 0;
+        }
+      }
+    }
+
+    .results-pagination-container {
+      text-align: center;
+    }
+
+    .results-pagination {
+      overflow: auto;
+      display: inline-block;
+
+      li {
+        list-style: none;
+        float: left;
+      }
+    }
+
+    .page-number {
+      margin: 5px;
+
+      button {
+        padding: 5px;
+        width: 32px;
+        height: 32px;
+        border: 1px solid $border-grey;
+        background-color: #FFFFFF;
+        border-radius: 1px;
+      }
+
+      &.active button {
+        background-color: $background-grey;
+        cursor: default;
+      }
+    }
+
+    .load-icon {
+      position: absolute;
+      display: none;
+      top: $filter-height;
+      bottom: 0;
+      left: 0;
+      width: 60%;
+      text-align: center;
+      background-color: $background-grey;
+
+      i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .loading .load-icon {
+      display: block;
     }
   }
 

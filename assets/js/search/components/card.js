@@ -14,7 +14,7 @@ class Card extends React.Component {
     render() {
         let listing = this.props.listing;
         return (
-            <div className="col-sm-12 col-md-6">
+            <div className="col-sm-12 col-md-6 card">
                 <a
                     href={listing.url}
                     className="grid-item-container"

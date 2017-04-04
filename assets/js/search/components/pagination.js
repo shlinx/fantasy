@@ -33,17 +33,19 @@ PageButton = connect((state) => ({
 
 export const Pagination = ({numPages, page, location}) => {
     return (
-        <ul className="results-pagination">
-            {page > 1 ? <PageButton location={location} goToPage={page - 1} label="Prev"/> : ''}
-            {page > 2 ? <PageButton location={location} goToPage="1" label="1"/> : ''}
-            {page > 3 ? <li className="page-number gap">&hellip;</li> : ''}
-            {page > 1 ? <PageButton location={location} goToPage={page - 1} label={page - 1}/> : ''}
-            <PageButton location={location} goToPage={page} label={page}/>
-            {page < numPages ? <PageButton location={location} goToPage={page + 1} label={page + 1}/> : ''}
-            {page < numPages - 2 ? <li className="page-number gap">&hellip;</li>  : ''}
-            {page < numPages - 1 ? <PageButton location={location} goToPage={numPages} label={numPages}/> : ''}
-            {page < numPages ? <PageButton location={location} goToPage={page + 1} label="Next"/> : ''}
-        </ul>
+        <div className="results-pagination-container">
+            <ul className="results-pagination">
+                {page > 1 ? <PageButton location={location} goToPage={page - 1} label="&larr;"/> : ''}
+                {page > 2 ? <PageButton location={location} goToPage="1" label="1"/> : ''}
+                {page > 3 ? <li className="page-number gap">&hellip;</li> : ''}
+                {page > 1 ? <PageButton location={location} goToPage={page - 1} label={page - 1}/> : ''}
+                <PageButton location={location} goToPage={page} label={page}/>
+                {page < numPages ? <PageButton location={location} goToPage={page + 1} label={page + 1}/> : ''}
+                {page < numPages - 2 ? <li className="page-number gap">&hellip;</li>  : ''}
+                {page < numPages - 1 ? <PageButton location={location} goToPage={numPages} label={numPages}/> : ''}
+                {page < numPages ? <PageButton location={location} goToPage={page + 1} label="&rarr;"/> : ''}
+            </ul>
+        </div>
     );
 };
 

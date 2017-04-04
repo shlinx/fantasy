@@ -15,7 +15,7 @@ class Results extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="cards-container">
                 {
                     (() => {
                         if(this.props.listings.length) {
