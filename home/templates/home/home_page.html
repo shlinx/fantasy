@@ -23,7 +23,7 @@
                     <div>
                         <form method="post" action="{% routablepageurl page 'search' %}">
                             {% csrf_token %}
-                            <input type="text" name="keywords" placeholder="海格立公园，天空塔">
+                            <input type="text" name="keywords" placeholder="公园、海滩、博物馆...">
                             <input type="submit" value="搜索">
                         </form>
                     </div>
@@ -31,11 +31,13 @@
                         <form method="post" action="{% routablepageurl page 'filter' %}">
                             {% csrf_token %}
                             <select name="regions">
+                                <option value>全部</option>
                                 {% for region in page.regions %}
                                     <option value="{{ region.regionname }}">{{ region.label }}</option>
                                 {% endfor %}
                             </select>
                             <select name="types">
+                                <option value>全部</option>
                                 {% for type in page.types %}
                                     <option value="{{ type.value }}">{{ type.label }}</option>
                                 {% endfor %}

@@ -77,7 +77,7 @@ class App extends React.Component {
                 </div>
                 <div id="results-container">
                     <Results location={this.props.location}/>
-                    <Pagination location={this.props.location}/>
+                    {this.props.listings.length > 0 ? <Pagination location={this.props.location}/> : ''}
                 </div>
                 <div id="map-container">
                     <Map location={this.props.location}/>
@@ -91,5 +91,6 @@ class App extends React.Component {
 }
 
 export default connect((state) => ({
-    isLoadingListings: state.isLoadingListings
+    isLoadingListings: state.isLoadingListings,
+    listings: state.listings
 }))(App);
