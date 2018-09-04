@@ -1,9 +1,0 @@
-Django==1.10.5
-requests==2.13.0
-django-extensions==1.7.5
-django-webpack-loader==0.4.1
-psycopg2==2.6.2
-wagtail==1.9
-sorl-thumbnail==12.3
-django-filter==1.0.1
-djangorestframework==3.5.4

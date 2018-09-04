@@ -7,10 +7,10 @@ services:
   - postgresql
 
 addons:
-  postgresql: "9.4"
+  postgresql: "10.4"
 
 env:
-  - DJANGO=1.10.5
+  - DJANGO=1.11.15
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=fantasy.settings.dev
@@ -18,7 +18,8 @@ before_install:
   - export PIP_USE_MIRRORS=true
 
 install:
-  - pip install -r requirements.txt
+  - pip install pipenv
+  - pipenv install
   - pip install django==$DJANGO --quiet
 
 before_script:
