@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "==2.13.0"
+requests = "==2.20.0"
 django-extensions = "==1.7.5"
 django-webpack-loader = "==0.4.1"
 sorl-thumbnail = "==12.3"
