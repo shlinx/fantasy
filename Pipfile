@@ -10,7 +10,7 @@ django-webpack-loader = "==0.4.1"
 sorl-thumbnail = "==12.3"
 django-filter = "==1.0.1"
 djangorestframework = "==3.8.2"
-django = "==1.11.23"
+django = "==1.11.29"
 "psycopg2" = "==2.7.5"
 wagtail = "==2.2.2"
 
